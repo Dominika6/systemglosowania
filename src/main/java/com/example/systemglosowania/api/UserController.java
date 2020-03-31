@@ -3,14 +3,12 @@ package com.example.systemglosowania.api;
 import com.example.systemglosowania.model.User;
 import com.example.systemglosowania.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("api/v1/user")
+@RequestMapping("api/user")
 @RestController
 public class UserController {
 
@@ -21,30 +19,43 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public void addUser(@Valid @NonNull @RequestBody User user){
-        userService.addUser(user);
+    @PostMapping("/addUser/{email}/{name}")
+    public void addUser(@PathVariable("email")String email,
+                        @PathVariable("name") String name){
+        userService.addUser(email, name);
     }
 
-    @GetMapping
+    @GetMapping("/getAllUsers")
     public List<User> getAllUsers(){
         return userService.getAllUsers();
     }
 
-    @GetMapping(path = "{userId}")
+    @GetMapping("/getUserById/{userId}")
     public Object getUserById(@PathVariable("userId") UUID userId){
         return userService.getUserById(userId)
                 .orElse(null);
     }
 
-    @DeleteMapping(path = "{userId")
-    public void deleteUserById(@PathVariable("userId")UUID userId){
-        userService.deleteUserById(userId);
+    @DeleteMapping("/deleteUserByEmail{email}")
+    public void deleteUserByEmail(@PathVariable("email") String email){
+        userService.deleteUserByEmail(email);
     }
 
-    @PutMapping(path = "{userId}")
-    public void updateUser(@PathVariable("userId") UUID userId, @Valid @NonNull @RequestBody User userToUpdate){
-        userService.updateUser(userId, userToUpdate);
+    @PutMapping("/updateUserEmail/{userId}/{email}")
+    public void updateUserEmail(@PathVariable("userId") UUID userId,
+                                @PathVariable("email") String emailToUpdate){
+        userService.updateUserEmail(userId, emailToUpdate);
     }
+
+    @PutMapping("/updateUserName/{userId}/{name}")
+    public void updateUserName(@PathVariable("userId") UUID userId,
+                               @PathVariable("name") String nameToUpdate){
+        userService.updateUserName(userId, nameToUpdate);
+    }
+
+//    @PutMapping("/updateUser/{userId}")
+//    public void updateUser(@PathVariable("userId") UUID userId, @Valid @NonNull @RequestBody User userToUpdate){
+//        userService.updateUser(userId, userToUpdate);
+//    }
 
 }

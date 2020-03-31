@@ -20,8 +20,10 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public int addUser(User user) {
-        return userDao.insertUser(user);
+    //TO DO setDomain() - dla admina przy tworzeniu grupy
+
+    public void addUser(String email, String name) {
+        userDao.insertUser(email, name);
     }
 
     public List<User> getAllUsers() {
@@ -32,11 +34,17 @@ public class UserService {
         return userDao.selectUserById(userId);
     }
 
-    public int deleteUserById(UUID userId) {
-        return userDao.deleteUserById(userId);
+    public void deleteUserByEmail(String email) {
+        userDao.deleteUserByEmail(email);
     }
 
-    public int updateUser(UUID userId, User newUser) {
-        return userDao.updateUserById(userId, newUser);
+    // editAccount: ale co z haslem?
+    public int updateUserEmail(UUID userId, String newEmail) {
+        return userDao.updateUserEmail(userId, newEmail);
     }
+
+    public int updateUserName(UUID userId, String newName) {
+        return userDao.updateUserName(userId, newName);
+    }
+
 }

@@ -19,11 +19,15 @@ public class SurveyService {
         this.surveyDao = surveyDao;
     }
 
-    public int addAnswer(UUID userID, UUID qId, Survey survey){
-        return surveyDao.addSurvey(userID, qId, survey);
+    public void addAnswer(UUID userID, UUID qId, boolean answer){
+        surveyDao.addAnswer(userID, qId, answer);
     }
 
-    public List<Survey> getAllUsers() {
-        return surveyDao.selectAllSurveys();
+    public List<Survey> getMyAnswers(UUID userId){
+        return surveyDao.getMyAnswers(userId);
+    }
+
+    public List<Survey> getResultByQId(UUID qId){
+        return surveyDao.getResultByQId(qId);
     }
 }

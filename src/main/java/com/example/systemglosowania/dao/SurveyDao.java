@@ -7,8 +7,9 @@ import java.util.UUID;
 
 public interface SurveyDao {
 
-    int addSurvey(UUID userID, UUID qID, Survey survey);
+    void addAnswer(UUID userID, UUID qID, boolean answer);
 
+    List<Survey> getMyAnswers(UUID userId);
 
-    List<Survey> selectAllSurveys();
+    List<Survey> getResultByQId(UUID qId);
 }

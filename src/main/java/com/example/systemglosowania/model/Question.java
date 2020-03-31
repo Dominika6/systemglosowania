@@ -1,28 +1,44 @@
 package com.example.systemglosowania.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.NotNull;
 
-import javax.validation.constraints.NotBlank;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
+
+@Entity
+@Table(name="questions")
 public class Question {
 
-    private final UUID qId;
+    @Id
+    @Column(name="qid")
+    @GeneratedValue
+    private UUID qId;
 
-    @NotBlank
-    private final String question;
+    @NotNull
+    @Column(name="question")
+    private String question;
 
-    @NotBlank
-    private final Date deadline;
+    @NotNull
+    @Column(name="deadline")
+    private Date deadline;
 
-    public Question(@JsonProperty("qId") UUID qId,
-                    @JsonProperty("question") String question,
-                    @JsonProperty("deadline")Date deadline){
+    // to istnieje tylko ze względu na JPA
+    protected Question(){}
+
+    // ten konstruktor jest do tworzenia instancji w bazie
+    public Question( UUID qId, String question, Date deadline){
         this.qId = qId;
         this.question = question;
         this.deadline = deadline;
     }
+
+    @Override
+    public String toString(){
+        return "Question [ qId = ' " + qId + " ', question = ' " + question + " ', deadline = ' " + deadline + " ' ] ";
+    }
+    // %tF 	ISO 8601 formatted date with “%tY-%tm-%td“.
 
 
     public UUID getqId() {

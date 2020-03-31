@@ -3,14 +3,13 @@ package com.example.systemglosowania.api;
 import com.example.systemglosowania.model.Question;
 import com.example.systemglosowania.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("api/v1/question")
+@RequestMapping("api/questions")
 @RestController
 public class QuestionController {
 
@@ -21,25 +20,28 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
-    @PostMapping
-    public void addQuestion(@Valid @NonNull @RequestBody Question question){
-        questionService.addQuestion(question);
+    @PostMapping("/addQuestion/{question}/{deadline}")
+    public void addQuestion(@PathVariable("question") String questionString,
+                            @PathVariable("deadline") Date deadline){
+        questionService.addQuestion(questionString, deadline);
     }
 
-    @GetMapping
+    @GetMapping("/getAllQuestions")
     public List<Question> getAllQuestions(){
         return questionService.getAllQuestions();
     }
 
-    @GetMapping(path = "{qId}")
-    public Question getQuestionById(@PathVariable("qId")UUID qId){
-        return questionService.getQuestionById(qId)
-                .orElse(null);
+    @GetMapping("/getQuestionById/{qId}")
+    public Question getQuestionById(@PathVariable("qId") UUID qId){
+        return questionService.getQuestionById(qId);
     }
 
-    @DeleteMapping(path = "{qId}")
-    public void deleteQuestionById(@PathVariable("qId") UUID qId, @Valid @NonNull @RequestBody Question questionToUpdate){
-        questionService.updateQuestion(qId, questionToUpdate);
+
+    @DeleteMapping("/deleteQuestionById/{qId}")
+    public void deleteQuestionById(@PathVariable("qId") UUID qId){
+        questionService.deleteQuestionById(qId);
     }
+
+
 
 }

@@ -1,32 +1,42 @@
 package com.example.systemglosowania.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.validation.constraints.NotBlank;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+@Entity
+@Table(name="users")
 public class User {
 
-    private final UUID userId;
+    @Id
+    @Column(name="userid")
+    @GeneratedValue
+    private UUID userId;
 
-    @NotBlank
-    private final String name;
+    @NotNull
+    @Column(name="name")
+    private String name;
 
-    @NotBlank
-    private final String email;
+    @NotNull
+    @Column(name="email")
+    private String email;
 
-    public User(@JsonProperty("userId") UUID userId,
-                @JsonProperty("name") String name,
-                @JsonProperty("email") String email) {
+    protected User(){}
+
+    public User(UUID userId, String name, String email) {
         this.userId = userId;
         this.name = name;
         this.email = email;
     }
 
+    @Override
+    public String toString(){
+        return "User [ userId = ' " + userId + " ', name = ' " + name + " ', email = ' " + email + " ' ]";
+    }
+
     public UUID getId(){
         return userId;
     }
-
 
     public String getName() {
         return name;

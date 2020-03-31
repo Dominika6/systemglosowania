@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,23 +20,24 @@ public class QuestionService {
         this.questionDao = questionDao;
     }
 
-    public int addQuestion(Question question){
-        return questionDao.insertQuestion(question);
+    public void addQuestion(String questionString, Date deadline){
+        questionDao.insertQuestion(questionString, deadline);
     }
 
     public List<Question> getAllQuestions(){
         return questionDao.selectAllQuestions();
     }
 
-    public Optional<Question> getQuestionById(UUID qId){
+    public Question getQuestionById(UUID qId){
         return questionDao.selectQuestionById(qId);
     }
 
-    public int deleteQuestionById(UUID qId){
-        return questionDao.deleteQuestionById(qId);
+    public void deleteQuestionById(UUID qId){
+        questionDao.deleteQuestionById(qId);
     }
 
-    public int updateQuestion(UUID qId, Question newQuestion){
-        return questionDao.updateQuestionById(qId, newQuestion);
-    }
+//    nie można aktualizować pytań
+//    public int updateQuestion(UUID qId, Question newQuestion){
+//        return questionDao.updateQuestionById(qId, newQuestion);
+//    }
 }

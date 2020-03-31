@@ -15,19 +15,23 @@ public class UserDataAccessService implements UserDao{
 
     private final JdbcTemplate jdbcTemplate;
 
+    // w tym linku samouczek jdbcTemplate:
+    // https://mkyong.com/spring/spring-jdbctemplate-querying-examples/
+
     @Autowired
     public UserDataAccessService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public int insertUser(UUID userId, User user) {
-        return 0;
+    public void insertUser(String email, String name) {
+        final String sql = "INSERT INTO users (name, email) VALUES ( '" + name + "', '" + email + "')";
+        jdbcTemplate.query(sql, mapUserFomDb());
     }
 
     @Override
     public List<User> selectAllUsers() {
-        final String sql = "SELECT userId, name, email FROM users";
+        final String sql = "SELECT userid, name, email FROM users";
         return jdbcTemplate.query(sql, mapUserFomDb());
     }
 
@@ -37,12 +41,16 @@ public class UserDataAccessService implements UserDao{
     }
 
     @Override
-    public int deleteUserById(UUID userId) {
+    public void deleteUserByEmail(String email) {
+    }
+
+    @Override
+    public int updateUserEmail(UUID userId, String email) {
         return 0;
     }
 
     @Override
-    public int updateUserById(UUID userId, User user) {
+    public int updateUserName(UUID userId, String name) {
         return 0;
     }
 

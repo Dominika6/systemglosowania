@@ -3,13 +3,12 @@ package com.example.systemglosowania.api;
 import com.example.systemglosowania.model.Survey;
 import com.example.systemglosowania.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
-@RequestMapping("api/v1/survey")
+@RequestMapping("api/survey")
 @RestController
 public class SurveyController {
 
@@ -20,9 +19,24 @@ public class SurveyController {
         this.surveyService = surveyService;
     }
 
-    @GetMapping
-    public List<Survey> getAllSurveys(){
-        return surveyService.getAllUsers();
+    @PostMapping("/addAnswer/{userid}/{qid}/{answer}")
+    public void addAnswer(@PathVariable("userid") UUID userID,
+                          @PathVariable("qid") UUID qId,
+                          @PathVariable("answer") boolean answer){
+        surveyService.addAnswer(userID, qId, answer);
+    }
+
+    @GetMapping("/getMyAnswers/{userid}")
+    public List<Survey> getMyAnswers(@PathVariable("userid") UUID userId){
+        return surveyService.getMyAnswers(userId);
+    }
+
+    @GetMapping("/getResultByQId/{qid}")
+    public List<Survey> getResultByQId(@PathVariable("qid") UUID qId){
+        return surveyService.getResultByQId(qId);
     }
 
 }
+
+
+

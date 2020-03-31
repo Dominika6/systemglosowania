@@ -8,18 +8,20 @@ import java.util.UUID;
 
 public interface UserDao {
 
-    int insertUser(UUID userId, User user);
+    void insertUser(String email, String name);
 
-    default  int insertUser(User user){
-        UUID userId = UUID.randomUUID();
-        return insertUser(userId, user);
-    }
+//    default int insertUser(User user){
+//        UUID userId = UUID.randomUUID();
+//        return insertUser(userId, user);
+//    }
 
     List<User> selectAllUsers();
 
     Optional<User> selectUserById(UUID userId);
 
-    int deleteUserById(UUID userId);
+    void deleteUserByEmail(String email);
 
-    int updateUserById(UUID userId, User user);
+    int updateUserEmail(UUID userId, String email);
+
+    int updateUserName(UUID userId, String name);
 }

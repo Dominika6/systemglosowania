@@ -1,23 +1,38 @@
 package com.example.systemglosowania.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.NotNull;
 
+import javax.persistence.*;
 import java.util.UUID;
 
+@Entity
+@Table(name="survey")
 public class Survey {
 
-    private final UUID userId;
+    @Id
+    @NotNull
+    @Column(name="userid")
+    private UUID userId;
 
-    private final UUID qId;
+    @Id
+    @NotNull
+    @Column(name="qid")
+    private UUID qId;
 
-    private final boolean answer;
+    @Column(name="answer")
+    private boolean answer;
 
-    public Survey(@JsonProperty("userId") UUID userId,
-                  @JsonProperty("qId") UUID qId,
-                  @JsonProperty("answer") boolean answer) {
+    protected Survey(){}
+
+    public Survey(UUID userId, UUID qId, boolean answer) {
         this.userId = userId;
         this.qId = qId;
         this.answer = answer;
+    }
+
+    @Override
+    public String toString() {
+        return "Survey [ userId = ' " + userId +" ', qId = ' " + userId + " ', answer= ' " + answer + " ' ]";
     }
 
     public UUID getUserId() {

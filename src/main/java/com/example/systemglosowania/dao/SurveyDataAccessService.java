@@ -1,10 +1,8 @@
 package com.example.systemglosowania.dao;
 
 import com.example.systemglosowania.model.Survey;
-import com.fasterxml.jackson.databind.ser.std.UUIDSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -22,14 +20,20 @@ public class SurveyDataAccessService implements SurveyDao {
     }
 
     @Override
-    public int addSurvey(UUID userID, UUID qID, Survey survey) {
-        return 0;
-
+    public void addAnswer(UUID userID, UUID qID, boolean answer) {
+        final String sql = ""; //TO DO
+        jdbcTemplate.query(sql,mapSurveyFromDb());
     }
 
     @Override
-    public List<Survey> selectAllSurveys() {
-        final String sql = "SELECT userId, qId, answer FROM survey";
+    public List<Survey> getMyAnswers(UUID userId) {
+        final String sql = ""; //TO DO
+        return jdbcTemplate.query(sql, mapSurveyFromDb());
+    }
+
+    @Override
+    public List<Survey> getResultByQId(UUID qId) {
+        final String sql = "";  //TO DO
         return jdbcTemplate.query(sql, mapSurveyFromDb());
     }
 
@@ -45,3 +49,8 @@ public class SurveyDataAccessService implements SurveyDao {
         });
     }
 }
+
+
+
+
+
