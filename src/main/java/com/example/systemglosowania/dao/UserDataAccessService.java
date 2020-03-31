@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository("postgresUser")
@@ -36,22 +35,31 @@ public class UserDataAccessService implements UserDao{
     }
 
     @Override
-    public Optional<User> selectUserById(UUID userId) {
-        return Optional.empty();
+    public List<User> selectUserById(UUID userId) {
+        final String sql = "SELECT userid, name, email FROM users WHERE userid='"+ userId + "'";
+        return jdbcTemplate.query(sql, mapUserFomDb());
     }
 
+    //mozna zamienić na deleteUserByEmail
     @Override
-    public void deleteUserByEmail(String email) {
+    public void deleteUserById(UUID userId) {
+        final String sql = "DELETE FROM survey WHERE userid = '" + userId + "'; " +
+                "DELETE FROM users WHERE userid='" + userId + "'";
+        jdbcTemplate.query(sql, mapUserFomDb());
     }
 
     @Override
     public int updateUserEmail(UUID userId, String email) {
-        return 0;
+        final String sql = "UPDATE users SET email = '" + email + "' WHERE userid = '" + userId + "' ";
+        jdbcTemplate.query(sql, mapUserFomDb());
+        return 1;
     }
 
     @Override
     public int updateUserName(UUID userId, String name) {
-        return 0;
+        final String sql = "UPDATE users SET name = '" + name + "' WHERE userid = '" + userId + "' ";
+        jdbcTemplate.query(sql, mapUserFomDb());
+        return 1;
     }
 
     private RowMapper<User> mapUserFomDb() {

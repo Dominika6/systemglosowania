@@ -20,20 +20,22 @@ public class SurveyDataAccessService implements SurveyDao {
     }
 
     @Override
-    public void addAnswer(UUID userID, UUID qID, boolean answer) {
-        final String sql = ""; //TO DO
+    public void addAnswer(UUID userId, UUID qId, boolean answer) {
+        final String sql = "INSERT INTO survey (userid, qid, answer) " +
+                "VALUES('" + userId + "','"+ qId +"','"+ answer +"')";
         jdbcTemplate.query(sql,mapSurveyFromDb());
     }
 
     @Override
     public List<Survey> getMyAnswers(UUID userId) {
-        final String sql = ""; //TO DO
+        final String sql = "SELECT qid, answer FROM survey WHERE userid = '"+ userId+"'";
         return jdbcTemplate.query(sql, mapSurveyFromDb());
     }
 
+    // zbiór odpowiedzi na dane pytania
     @Override
     public List<Survey> getResultByQId(UUID qId) {
-        final String sql = "";  //TO DO
+        final String sql = "SELECT userid, answer FROM survey WHERE qid = '"+ qId +"'";
         return jdbcTemplate.query(sql, mapSurveyFromDb());
     }
 

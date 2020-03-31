@@ -21,7 +21,7 @@ public interface QuestionDao {
 
     List<Question> selectAllQuestions();
 
-    Question selectQuestionById(UUID qId);
+    Object selectQuestionById(UUID qId);
 
     boolean deleteQuestionById(UUID qId);
 

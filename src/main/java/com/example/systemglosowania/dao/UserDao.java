@@ -3,7 +3,6 @@ package com.example.systemglosowania.dao;
 import com.example.systemglosowania.model.User;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface UserDao {
@@ -17,9 +16,9 @@ public interface UserDao {
 
     List<User> selectAllUsers();
 
-    Optional<User> selectUserById(UUID userId);
+    List<User> selectUserById(UUID userId);
 
-    void deleteUserByEmail(String email);
+    void deleteUserById(UUID userId);
 
     int updateUserEmail(UUID userId, String email);
 

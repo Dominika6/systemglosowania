@@ -32,7 +32,7 @@ public class QuestionController {
     }
 
     @GetMapping("/getQuestionById/{qId}")
-    public Question getQuestionById(@PathVariable("qId") UUID qId){
+    public Object getQuestionById(@PathVariable("qId") UUID qId){
         return questionService.getQuestionById(qId);
     }
 

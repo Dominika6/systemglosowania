@@ -30,15 +30,15 @@ public class UserService {
         return userDao.selectAllUsers();
     }
 
-    public Optional<User> getUserById(UUID userId) {
+    public List<User> getUserById(UUID userId) {
         return userDao.selectUserById(userId);
     }
 
-    public void deleteUserByEmail(String email) {
-        userDao.deleteUserByEmail(email);
+    public void deleteUserById(UUID userId) {
+        userDao.deleteUserById(userId);
     }
 
-    // editAccount: ale co z haslem?
+    // /editAccount: ale co z haslem?
     public int updateUserEmail(UUID userId, String newEmail) {
         return userDao.updateUserEmail(userId, newEmail);
     }

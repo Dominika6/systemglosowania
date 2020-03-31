@@ -28,7 +28,7 @@ public class QuestionService {
         return questionDao.selectAllQuestions();
     }
 
-    public Question getQuestionById(UUID qId){
+    public Object getQuestionById(UUID qId){
         return questionDao.selectQuestionById(qId);
     }
 

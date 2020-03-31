@@ -32,13 +32,12 @@ public class UserController {
 
     @GetMapping("/getUserById/{userId}")
     public Object getUserById(@PathVariable("userId") UUID userId){
-        return userService.getUserById(userId)
-                .orElse(null);
+        return userService.getUserById(userId);
     }
 
-    @DeleteMapping("/deleteUserByEmail{email}")
-    public void deleteUserByEmail(@PathVariable("email") String email){
-        userService.deleteUserByEmail(email);
+    @DeleteMapping("/deleteUserById{userId}")
+    public void deleteUserByEmail(@PathVariable("userId") UUID userId){
+        userService.deleteUserById(userId);
     }
 
     @PutMapping("/updateUserEmail/{userId}/{email}")
