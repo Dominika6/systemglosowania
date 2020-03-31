@@ -7,21 +7,21 @@ import java.util.Date;
 import java.util.UUID;
 
 
-@Entity
-@Table(name="questions")
+//@Entity
+//@Table(name="questions")
 public class Question {
 
     @Id
-    @Column(name="qid")
+//    @Column(name="qid")
     @GeneratedValue
     private UUID qId;
 
     @NotNull
-    @Column(name="question")
+//    @Column(name="question")
     private String question;
 
     @NotNull
-    @Column(name="deadline")
+//    @Column(name="deadline")
     private Date deadline;
 
     // to istnieje tylko ze względu na JPA

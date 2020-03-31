@@ -4,21 +4,21 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-@Entity
-@Table(name="users")
+//@Entity
+//@Table(name="users")
 public class User {
 
     @Id
-    @Column(name="userid")
+//    @Column(name="userid")
     @GeneratedValue
     private UUID userId;
 
     @NotNull
-    @Column(name="name")
+//    @Column(name="name")
     private String name;
 
     @NotNull
-    @Column(name="email")
+//    @Column(name="email")
     private String email;
 
     protected User(){}
