@@ -4,26 +4,31 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-//@Entity
-//@Table(name="users")
 public class User {
 
     @Id
-//    @Column(name="userid")
     @GeneratedValue
     private UUID userId;
 
     @NotNull
-//    @Column(name="name")
     private String name;
 
     @NotNull
-//    @Column(name="email")
     private String email;
+
+    @NotNull
+    private String password;
 
     protected User(){}
 
-    public User(UUID userId, String name, String email) {
+    public User(UUID userId, String name, String email, String password) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(UUID userId, String name, String email){
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -44,6 +49,10 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
 

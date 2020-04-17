@@ -22,7 +22,6 @@ public class QuestionDataAccessService implements QuestionDao {
 
     @Override
     public void insertQuestion(String questionString, Date deadline){
-        // czy taki przerywany String to poprawny zapis w tym przypadku?
         final String sql = "INSERT INTO questions (question , deadline) VALUES ('"+ questionString + "','" + deadline + "')";
         jdbcTemplate.query(sql, mapQuestionFromDb()); //TO DO
     }
@@ -35,7 +34,7 @@ public class QuestionDataAccessService implements QuestionDao {
 
     @Override
     public Object selectQuestionById(UUID qId) {
-        final String sql = "SELECT question, deadline FROM questions WHERE qid = '" + qId + "'";
+        final String sql = "SELECT qid, question, deadline FROM questions WHERE qid = '" + qId + "'";
         return jdbcTemplate.query(sql, mapQuestionFromDb());
     }
 
@@ -53,7 +52,6 @@ public class QuestionDataAccessService implements QuestionDao {
             UUID qId = UUID.fromString(qIdString);
             String question = resultSet.getString("question");
             Date deadline = resultSet.getDate("deadline");
-
 
             return new Question( qId, question, deadline);
         });

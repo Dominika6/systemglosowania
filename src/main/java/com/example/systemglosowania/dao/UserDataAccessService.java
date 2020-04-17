@@ -23,9 +23,9 @@ public class UserDataAccessService implements UserDao{
     }
 
     @Override
-    public void insertUser(String email, String name) {
-        final String sql = "INSERT INTO users (name, email) VALUES ( '" + name + "', '" + email + "')";
-        jdbcTemplate.query(sql, mapUserFomDb());
+    public void insertUser(String email, String name, String password) {
+        final String sql = "INSERT INTO users (name, email, password) VALUES ( '" + name + "', '" + email + "', '"+ password +"')";
+        jdbcTemplate.query(sql, mapUserWithPasswordFomDb());
     }
 
     @Override
@@ -69,7 +69,19 @@ public class UserDataAccessService implements UserDao{
             String name = resultSet.getString("name");
             String email = resultSet.getString("email");
 
-            return new User( userId, name, email);
+            return new User(userId, name, email);
+        };
+    }
+
+    private RowMapper<User> mapUserWithPasswordFomDb() {
+        return (resultSet, i) -> {
+            String userIdString = resultSet.getString("userId");
+            UUID userId = UUID.fromString(userIdString);
+            String name = resultSet.getString("name");
+            String email = resultSet.getString("email");
+            String password = resultSet.getString("password");
+
+            return new User(userId, name, email, password);
         };
     }
 }

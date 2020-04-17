@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface UserDao {
 
-    void insertUser(String email, String name);
+    void insertUser(String email, String name, String password);
 
 //    default int insertUser(User user){
 //        UUID userId = UUID.randomUUID();

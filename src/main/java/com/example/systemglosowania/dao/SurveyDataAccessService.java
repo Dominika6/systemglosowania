@@ -28,14 +28,14 @@ public class SurveyDataAccessService implements SurveyDao {
 
     @Override
     public List<Survey> getMyAnswers(UUID userId) {
-        final String sql = "SELECT qid, answer FROM survey WHERE userid = '"+ userId+"'";
+        final String sql = "SELECT userid, qid, answer FROM survey WHERE userid = '"+ userId+"'";
         return jdbcTemplate.query(sql, mapSurveyFromDb());
     }
 
     // zbiór odpowiedzi na dane pytania
     @Override
     public List<Survey> getResultByQId(UUID qId) {
-        final String sql = "SELECT userid, answer FROM survey WHERE qid = '"+ qId +"'";
+        final String sql = "SELECT userid, qid, answer FROM survey WHERE qid = '"+ qId +"'";
         return jdbcTemplate.query(sql, mapSurveyFromDb());
     }
 

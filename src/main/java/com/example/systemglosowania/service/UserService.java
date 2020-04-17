@@ -20,10 +20,11 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    //TO DO setDomain() - dla admina przy tworzeniu grupy
+    // TODO setDomain() - dla admina przy tworzeniu grupy
+    // a może ustawić konkretną w kodzie? TAK
 
-    public void addUser(String email, String name) {
-        userDao.insertUser(email, name);
+    public void addUser(String email, String name, String password) {
+        userDao.insertUser(email, name, password);
     }
 
     public List<User> getAllUsers() {

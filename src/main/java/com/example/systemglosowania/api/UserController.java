@@ -19,10 +19,11 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/addUser/{email}/{name}")
+    @PostMapping("/addUser/{email}/{name}/{password}")
     public void addUser(@PathVariable("email")String email,
-                        @PathVariable("name") String name){
-        userService.addUser(email, name);
+                        @PathVariable("name") String name,
+                        @PathVariable("password") String password){
+        userService.addUser(email, name, password);
     }
 
     @GetMapping("/getAllUsers")
@@ -35,7 +36,7 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
-    @DeleteMapping("/deleteUserById{userId}")
+    @DeleteMapping("/deleteUserById/{userId}")
     public void deleteUserByEmail(@PathVariable("userId") UUID userId){
         userService.deleteUserById(userId);
     }

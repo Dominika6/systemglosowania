@@ -38,7 +38,7 @@ public class Question {
     public String toString(){
         return "Question [ qId = ' " + qId + " ', question = ' " + question + " ', deadline = ' " + deadline + " ' ] ";
     }
-    // %tF 	ISO 8601 formatted date with “%tY-%tm-%td“.
+    // %tF 	ISO 8601 formatted date with “%tY-%tm-%td“. - już nie potrzebne
 
 
     public UUID getqId() {

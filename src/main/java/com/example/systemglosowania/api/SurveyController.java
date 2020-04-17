@@ -26,12 +26,12 @@ public class SurveyController {
         surveyService.addAnswer(userID, qId, answer);
     }
 
-    @GetMapping("/getMyAnswers/{userid}")
+    @GetMapping("/getMyAnswers/{userid}") //działa
     public List<Survey> getMyAnswers(@PathVariable("userid") UUID userId){
         return surveyService.getMyAnswers(userId);
     }
 
-    @GetMapping("/getResultByQId/{qid}")
+    @GetMapping("/getResultByQId/{qid}")//działa
     public List<Survey> getResultByQId(@PathVariable("qid") UUID qId){
         return surveyService.getResultByQId(qId);
     }
