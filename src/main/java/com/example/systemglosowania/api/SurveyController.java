@@ -20,10 +20,10 @@ public class SurveyController {
     }
 
     @PostMapping("/addAnswer/{userid}/{qid}/{answer}")
-    public void addAnswer(@PathVariable("userid") UUID userID,
+    public List<Survey> addAnswer(@PathVariable("userid") UUID userID,
                           @PathVariable("qid") UUID qId,
                           @PathVariable("answer") boolean answer){
-        surveyService.addAnswer(userID, qId, answer);
+        return surveyService.addAnswer(userID, qId, answer);
     }
 
     @GetMapping("/getMyAnswers/{userid}") //działa

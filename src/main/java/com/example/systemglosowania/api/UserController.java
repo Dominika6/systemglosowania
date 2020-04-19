@@ -20,10 +20,10 @@ public class UserController {
     }
 
     @PostMapping("/addUser/{email}/{name}/{password}")
-    public void addUser(@PathVariable("email")String email,
+    public List<User> addUser(@PathVariable("email")String email,
                         @PathVariable("name") String name,
                         @PathVariable("password") String password){
-        userService.addUser(email, name, password);
+        return userService.addUser(email, name, password);
     }
 
     @GetMapping("/getAllUsers")
@@ -37,25 +37,20 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteUserById/{userId}")
-    public void deleteUserByEmail(@PathVariable("userId") UUID userId){
-        userService.deleteUserById(userId);
+    public List<User> deleteUserByEmail(@PathVariable("userId") UUID userId){
+        return userService.deleteUserById(userId);
     }
 
     @PutMapping("/updateUserEmail/{userId}/{email}")
-    public void updateUserEmail(@PathVariable("userId") UUID userId,
+    public List<User> updateUserEmail(@PathVariable("userId") UUID userId,
                                 @PathVariable("email") String emailToUpdate){
-        userService.updateUserEmail(userId, emailToUpdate);
+        return userService.updateUserEmail(userId, emailToUpdate);
     }
 
     @PutMapping("/updateUserName/{userId}/{name}")
-    public void updateUserName(@PathVariable("userId") UUID userId,
+    public List<User> updateUserName(@PathVariable("userId") UUID userId,
                                @PathVariable("name") String nameToUpdate){
-        userService.updateUserName(userId, nameToUpdate);
+        return userService.updateUserName(userId, nameToUpdate);
     }
-
-//    @PutMapping("/updateUser/{userId}")
-//    public void updateUser(@PathVariable("userId") UUID userId, @Valid @NonNull @RequestBody User userToUpdate){
-//        userService.updateUser(userId, userToUpdate);
-//    }
 
 }

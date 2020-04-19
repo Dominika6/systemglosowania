@@ -1,6 +1,7 @@
 package com.example.systemglosowania.dao;
 
 import com.example.systemglosowania.model.Question;
+import com.example.systemglosowania.model.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -21,15 +22,16 @@ public class QuestionDataAccessService implements QuestionDao {
     }
 
     @Override
-    public void insertQuestion(String questionString, Date deadline){
-        final String sql = "INSERT INTO questions (question , deadline) VALUES ('"+ questionString + "','" + deadline + "')";
-        jdbcTemplate.query(sql, mapQuestionFromDb()); //TO DO
-    }
-
-    @Override
     public List<Question> selectAllQuestions() {
         final String sql = "SELECT qid, question, deadline FROM questions";
         return jdbcTemplate.query(sql, mapQuestionFromDb());
+    }
+
+    @Override
+    public List<Question> insertQuestion(String question, Date deadline){
+        final String sql = "INSERT INTO questions (question , deadline) VALUES ('"+ question + "','" + deadline + "') RETURNING qid, question, deadline";
+        return jdbcTemplate.query(sql, mapQuestionFromDb());
+
     }
 
     @Override
@@ -39,11 +41,12 @@ public class QuestionDataAccessService implements QuestionDao {
     }
 
     @Override
-    public boolean deleteQuestionById(UUID qId){
-        final String sql = "DELETE FROM survey WHERE qid = '" + qId + "';" +
-                "DELETE FROM questions WHERE qid = '" + qId + "' ";
-        jdbcTemplate.query(sql, mapQuestionFromDb());
-        return true;
+    public List<Question> deleteQuestionById(UUID qId){
+        final String sql1 = "DELETE FROM survey WHERE qid = '" + qId + "' RETURNING userid, qid, answer";
+        jdbcTemplate.query(sql1, mapSurveyFromDb());
+        final String sql2 = "DELETE FROM questions WHERE qid = '" + qId + "' RETURNING qid, question, deadline";
+        return jdbcTemplate.query(sql2, mapQuestionFromDb());
+
     }
 
     private RowMapper<Question> mapQuestionFromDb() {
@@ -54,6 +57,18 @@ public class QuestionDataAccessService implements QuestionDao {
             Date deadline = resultSet.getDate("deadline");
 
             return new Question( qId, question, deadline);
+        });
+    }
+
+    private RowMapper<Survey> mapSurveyFromDb() {
+        return ((resultSet, i) -> {
+            String userIdString = resultSet.getString("userId");
+            UUID userId = UUID.fromString(userIdString);
+            String qIdString = resultSet.getString("qId");
+            UUID qId = UUID.fromString(qIdString);
+            boolean answer = resultSet.getBoolean("answer");
+
+            return new Survey(userId, qId, answer);
         });
     }
 

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface UserDao {
 
-    void insertUser(String email, String name, String password);
+    List<User> insertUser(String email, String name, String password);
 
 //    default int insertUser(User user){
 //        UUID userId = UUID.randomUUID();
@@ -18,9 +18,9 @@ public interface UserDao {
 
     List<User> selectUserById(UUID userId);
 
-    void deleteUserById(UUID userId);
+    List<User> deleteUserById(UUID userId);
 
-    int updateUserEmail(UUID userId, String email);
+    List<User> updateUserEmail(UUID userId, String email);
 
-    int updateUserName(UUID userId, String name);
+    List<User> updateUserName(UUID userId, String name);
 }

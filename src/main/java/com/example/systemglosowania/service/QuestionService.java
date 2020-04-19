@@ -4,8 +4,10 @@ import com.example.systemglosowania.dao.QuestionDao;
 import com.example.systemglosowania.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,8 +22,8 @@ public class QuestionService {
         this.questionDao = questionDao;
     }
 
-    public void addQuestion(String questionString, Date deadline){
-        questionDao.insertQuestion(questionString, deadline);
+    public List<Question> addQuestion(String questionString, Date deadline){
+        return questionDao.insertQuestion(questionString, deadline);
     }
 
     public List<Question> getAllQuestions(){
@@ -32,12 +34,8 @@ public class QuestionService {
         return questionDao.selectQuestionById(qId);
     }
 
-    public void deleteQuestionById(UUID qId){
-        questionDao.deleteQuestionById(qId);
+    public List<Question> deleteQuestionById(UUID qId){
+        return questionDao.deleteQuestionById(qId);
     }
 
-//    nie można aktualizować pytań
-//    public int updateQuestion(UUID qId, Question newQuestion){
-//        return questionDao.updateQuestionById(qId, newQuestion);
-//    }
 }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,8 +22,8 @@ public class UserService {
     // TODO setDomain() - dla admina przy tworzeniu grupy
     // a może ustawić konkretną w kodzie? TAK
 
-    public void addUser(String email, String name, String password) {
-        userDao.insertUser(email, name, password);
+    public List<User> addUser(String email, String name, String password) {
+        return userDao.insertUser(email, name, password);
     }
 
     public List<User> getAllUsers() {
@@ -35,16 +34,16 @@ public class UserService {
         return userDao.selectUserById(userId);
     }
 
-    public void deleteUserById(UUID userId) {
-        userDao.deleteUserById(userId);
+    public List<User> deleteUserById(UUID userId) {
+        return userDao.deleteUserById(userId);
     }
 
-    // /editAccount: ale co z haslem?
-    public int updateUserEmail(UUID userId, String newEmail) {
+    //TODO editAccount: ale co z haslem?
+    public List<User> updateUserEmail(UUID userId, String newEmail) {
         return userDao.updateUserEmail(userId, newEmail);
     }
 
-    public int updateUserName(UUID userId, String newName) {
+    public List<User> updateUserName(UUID userId, String newName) {
         return userDao.updateUserName(userId, newName);
     }
 

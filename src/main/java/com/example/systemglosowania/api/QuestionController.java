@@ -3,10 +3,14 @@ package com.example.systemglosowania.api;
 import com.example.systemglosowania.model.Question;
 import com.example.systemglosowania.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @RequestMapping("api/questions")
@@ -21,9 +25,9 @@ public class QuestionController {
     }
 
     @PostMapping("/addQuestion/{question}/{deadline}")
-    public void addQuestion(@PathVariable("question") String questionString,
-                            @PathVariable("deadline") Date deadline){
-        questionService.addQuestion(questionString, deadline);
+    public List<Question> addQuestion(@PathVariable("question") String questionString,
+                                      @PathVariable("deadline") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline) {
+            return questionService.addQuestion(questionString, deadline);
     }
 
     @GetMapping("/getAllQuestions")
@@ -36,12 +40,10 @@ public class QuestionController {
         return questionService.getQuestionById(qId);
     }
 
-
     @DeleteMapping("/deleteQuestionById/{qId}")
-    public void deleteQuestionById(@PathVariable("qId") UUID qId){
-        questionService.deleteQuestionById(qId);
+    public List<Question> deleteQuestionById(@PathVariable("qId") UUID qId){
+        return questionService.deleteQuestionById(qId);
     }
-
 
 
 }

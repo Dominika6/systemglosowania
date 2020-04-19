@@ -5,21 +5,17 @@ import com.sun.istack.NotNull;
 import javax.persistence.*;
 import java.util.UUID;
 
-//@Entity
-//@Table(name="survey")
+
 public class Survey {
 
     @Id
     @NotNull
-//    @Column(name="userid")
     private UUID userId;
 
     @Id
     @NotNull
-//    @Column(name="qid")
     private UUID qId;
 
-//    @Column(name="answer")
     private boolean answer;
 
     protected Survey(){}

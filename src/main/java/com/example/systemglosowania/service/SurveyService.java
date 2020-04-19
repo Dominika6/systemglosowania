@@ -19,8 +19,8 @@ public class SurveyService {
         this.surveyDao = surveyDao;
     }
 
-    public void addAnswer(UUID userID, UUID qId, boolean answer){
-        surveyDao.addAnswer(userID, qId, answer);
+    public List<Survey> addAnswer(UUID userID, UUID qId, boolean answer){
+        return surveyDao.addAnswer(userID, qId, answer);
     }
 
     public List<Survey> getMyAnswers(UUID userId){
