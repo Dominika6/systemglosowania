@@ -30,4 +30,8 @@ public class SurveyService {
     public List<Survey> getResultByQId(UUID qId){
         return surveyDao.getResultByQId(qId);
     }
+
+    public List<Survey> ifAnswerExists (UUID userid, UUID qid){
+        return surveyDao.ifAnswerExists(userid, qid);
+    }
 }

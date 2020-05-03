@@ -38,6 +38,21 @@ public class SurveyDataAccessService implements SurveyDao {
         return jdbcTemplate.query(sql, mapSurveyFromDb());
     }
 
+    @Override
+    public List<Survey> ifAnswerExists(UUID userid, UUID qid) {
+        final String sql = "select answer from survey where userid = '" + userid + "'and qid= '" + qid + "'";
+//        List<Survey> lista = jdbcTemplate.query(sql, mapAnswerFromDb());
+//        String ans = Survey.answerToString(lista);
+        return jdbcTemplate.query(sql, mapAnswerFromDb());
+    }
+
+    private RowMapper<Survey> mapAnswerFromDb(){
+        return ((resultSet, i) -> {
+            boolean answers = resultSet.getBoolean("answer");
+            return new Survey(answers);
+        });
+    }
+
     private RowMapper<Survey> mapSurveyFromDb() {
         return ((resultSet, i) -> {
             String userIdString = resultSet.getString("userId");

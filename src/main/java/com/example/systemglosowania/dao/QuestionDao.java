@@ -16,5 +16,4 @@ public interface QuestionDao {
 
     List<Question> deleteQuestionById(UUID qId);
 
-//    int updateQuestionById(UUID qId, Question question);
 }

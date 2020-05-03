@@ -1,11 +1,18 @@
 package com.example.systemglosowania.model;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.management.relation.Role;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.UUID;
 
-public class User {
-
+public class User
+{
     @Id
     @GeneratedValue
     private UUID userId;
@@ -19,15 +26,29 @@ public class User {
     @NotNull
     private String password;
 
+    @NotNull
+//    @Enumerated(EnumType.STRING)
+    private String role;
+
+
+
     protected User(){}
 
-    public User(UUID userId, String name, String email, String password) {
+    public User(UUID userId, String name, String email, String role, String password) {
         this.userId = userId;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
-
+//
+    public User(UUID userId, String name, String email, String role){
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+    }
+//
     public User(UUID userId, String name, String email){
         this.userId = userId;
         this.name = name;
@@ -36,7 +57,8 @@ public class User {
 
     @Override
     public String toString(){
-        return "User [ userId = ' " + userId + " ', name = ' " + name + " ', email = ' " + email + " ' ]";
+        return "User [ userId = ' " + userId + " ', name = ' " + name + " ', email = ' " + email + "', " +
+                "role = ' " + role +"']";
     }
 
     public UUID getId(){
@@ -51,8 +73,42 @@ public class User {
         return email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getRole(){
+        return role;
     }
+
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return Collections.singleton(new SimpleGrantedAuthority(role)); //tu określamy, że można mieć tylko jedną rolę
+//    }
+
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return null;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return true;
+//    }
 }
 

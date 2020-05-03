@@ -20,22 +20,32 @@ public class SurveyController {
     }
 
     @PostMapping("/addAnswer/{userid}/{qid}/{answer}")
-    public List<Survey> addAnswer(@PathVariable("userid") UUID userID,
-                          @PathVariable("qid") UUID qId,
+    public String addAnswer(@PathVariable("userid") UUID userid,
+                          @PathVariable("qid") UUID qid,
                           @PathVariable("answer") boolean answer){
-        return surveyService.addAnswer(userID, qId, answer);
+        if (ifAnswerExists(userid, qid)){
+             surveyService.addAnswer(userid, qid, answer);
+             return "Answer added. ";
+        }else{
+            return "You have already answered this question. ";
+        }
     }
 
-    @GetMapping("/getMyAnswers/{userid}") //działa
+    @GetMapping("/getMyAnswers/{userid}")
     public List<Survey> getMyAnswers(@PathVariable("userid") UUID userId){
         return surveyService.getMyAnswers(userId);
     }
 
-    @GetMapping("/getResultByQId/{qid}")//działa
+    @GetMapping("/getResultByQId/{qid}")
     public List<Survey> getResultByQId(@PathVariable("qid") UUID qId){
         return surveyService.getResultByQId(qId);
     }
 
+    public boolean ifAnswerExists(UUID userid, UUID qid){
+        List<Survey> lista = surveyService.ifAnswerExists(userid, qid);
+        String answers = lista.toString();
+        return answers.replace("[", "").replace("]", "").isEmpty();
+    }
 }
 
 

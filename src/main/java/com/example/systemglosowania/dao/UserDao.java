@@ -7,12 +7,7 @@ import java.util.UUID;
 
 public interface UserDao {
 
-    List<User> insertUser(String email, String name, String password);
-
-//    default int insertUser(User user){
-//        UUID userId = UUID.randomUUID();
-//        return insertUser(userId, user);
-//    }
+    List<User> insertUser(String email, String name, String password, String role);
 
     List<User> selectAllUsers();
 
@@ -23,4 +18,8 @@ public interface UserDao {
     List<User> updateUserEmail(UUID userId, String email);
 
     List<User> updateUserName(UUID userId, String name);
+
+    List<User> updatePassword(UUID userid, String password);
+
+    boolean areThePasswordsTheSame( UUID userid, String isThePasswordCorrect);
 }

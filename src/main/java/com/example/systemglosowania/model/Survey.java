@@ -20,15 +20,23 @@ public class Survey {
 
     protected Survey(){}
 
+    public Survey(boolean answer){
+        this.answer = answer;
+    }
+
     public Survey(UUID userId, UUID qId, boolean answer) {
         this.userId = userId;
         this.qId = qId;
         this.answer = answer;
     }
 
+//    public String answerToString(){
+//        return "" + answer + "";
+//    }
+
     @Override
     public String toString() {
-        return "Survey [ userId = ' " + userId +" ', qId = ' " + userId + " ', answer= ' " + answer + " ' ]";
+        return "" + answer + "";
     }
 
     public UUID getUserId() {

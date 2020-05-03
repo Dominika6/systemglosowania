@@ -15,7 +15,7 @@ public class UserDataAccessService implements UserDao{
 
     private final JdbcTemplate jdbcTemplate;
 
-    // w tym linku samouczek jdbcTemplate:
+    // samouczek jdbcTemplate:
     // https://mkyong.com/spring/spring-jdbctemplate-querying-examples/
 
     @Autowired
@@ -23,10 +23,17 @@ public class UserDataAccessService implements UserDao{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @Override //TODO komunikat, że podany email jest już w bazie
-    public List<User> insertUser(String email, String name, String password) {
-        final String sql = "INSERT INTO users (name, email, password) VALUES ( '" + name + "', '" + email + "', '"+ password +"') RETURNING userid, name, email";
-        return jdbcTemplate.query(sql, mapUserFomDb());
+    //funkcja crypt(), wytłumaczone jak autoryzować - będzie potrzebne do LOGOWANIA
+    //https://www.postgresql.org/docs/current/pgcrypto.html
+
+    //TODO komunikat, że podany email jest już w bazie, bo wywala 500
+
+    @Override
+    public List<User> insertUser(String email, String name, String password, String role) {
+        final String sql = "INSERT INTO users (name, email, password, role) " +
+                "VALUES ( '" + name + "', '" + email + "', crypt( '" + password + "', gen_salt('md5'))," +
+                " '" + role + "') RETURNING userid, name, email, role";
+        return jdbcTemplate.query(sql, mapUserWithRoleFomDb());
     }
 
     @Override
@@ -37,11 +44,10 @@ public class UserDataAccessService implements UserDao{
 
     @Override
     public List<User> selectUserById(UUID userId) {
-        final String sql = "SELECT userid, name, email FROM users WHERE userid='"+ userId + "'";
+        final String sql = "SELECT userid, name, email FROM users WHERE userid='" + userId + "'";
         return jdbcTemplate.query(sql, mapUserFomDb());
     }
 
-    //mozna zamienić na deleteUserByEmail
     @Override
     public List<User> deleteUserById(UUID userId) {
         final String sql1 = "DELETE FROM survey WHERE userid = '" + userId + "' RETURNING userid, qid, answer";
@@ -52,15 +58,40 @@ public class UserDataAccessService implements UserDao{
 
     @Override
     public List<User> updateUserEmail(UUID userId, String email) {
-        final String sql = "UPDATE users SET email = '" + email + "' WHERE userid = '" + userId + "' RETURNING userid, name, email";
+        final String sql = "UPDATE users SET email = '" + email + "' WHERE userid = '" + userId + "' " +
+                "RETURNING userid, name, email";
         return jdbcTemplate.query(sql, mapUserFomDb());
     }
 
     @Override
     public List<User> updateUserName(UUID userId, String name) {
-        final String sql = "UPDATE users SET name = '" + name + "' WHERE userid = '" + userId + "' RETURNING userid, name, email";
+        final String sql = "UPDATE users SET name = '" + name + "' WHERE userid = '" + userId + "' " +
+                "RETURNING userid, name, email";
         return jdbcTemplate.query(sql, mapUserFomDb());
+    }
 
+    @Override
+    public List<User> updatePassword(UUID userid, String password){
+        final String sql = "UPDATE users SET password = crypt( '" + password + "', gen_salt('md5')) " +
+                "WHERE userid = '" + userid + "' RETURNING userid, name, email";
+        return jdbcTemplate.query(sql, mapUserFomDb());
+    }
+
+    @Override
+    public boolean areThePasswordsTheSame(UUID userid, String isThePasswordCorrect){
+        final String sql1 = "SELECT password FROM users WHERE userid = '" + userid + "' ";
+        List<String> cryptOldPass = jdbcTemplate.query(sql1, mapCryptPasswordFromDb());
+        String oldFormat = cryptOldPass.toString().replace("[", "").replace("]", "");
+
+        final String sql2 = "SELECT crypt ('" + isThePasswordCorrect + "', '" + oldFormat + "' ) AS password";
+        List<String> newCrypt = jdbcTemplate.query(sql2, mapCryptPasswordFromDb());
+        String newFormat = newCrypt.toString().replace("[", "").replace("]", "");
+
+        return oldFormat.equals(newFormat);
+    }
+
+    private RowMapper<String> mapCryptPasswordFromDb(){
+        return (resultSet, i) -> resultSet.getString("password");
     }
 
     private RowMapper<User> mapUserFomDb() {
@@ -73,16 +104,15 @@ public class UserDataAccessService implements UserDao{
             return new User(userid, name, email);
         };
     }
-
-    private RowMapper<User> mapUserWithPasswordFomDb() {
+    private RowMapper<User> mapUserWithRoleFomDb() {
         return (resultSet, i) -> {
             String userIdString = resultSet.getString("userid");
             UUID userid = UUID.fromString(userIdString);
             String name = resultSet.getString("name");
             String email = resultSet.getString("email");
-            String password = resultSet.getString("password");
+            String role = resultSet.getString("role");
 
-            return new User(userid, name, email, password);
+            return new User(userid, name, email, role);
         };
     }
 
