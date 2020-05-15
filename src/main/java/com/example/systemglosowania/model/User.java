@@ -1,15 +1,8 @@
 package com.example.systemglosowania.model;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.management.relation.Role;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.UUID;
+import java.util.*;
 
 public class User
 {
@@ -27,10 +20,7 @@ public class User
     private String password;
 
     @NotNull
-//    @Enumerated(EnumType.STRING)
     private String role;
-
-
 
     protected User(){}
 
@@ -41,14 +31,14 @@ public class User
         this.password = password;
         this.role = role;
     }
-//
+
     public User(UUID userId, String name, String email, String role){
         this.userId = userId;
         this.name = name;
         this.email = email;
         this.role = role;
     }
-//
+
     public User(UUID userId, String name, String email){
         this.userId = userId;
         this.name = name;
@@ -77,38 +67,5 @@ public class User
         return role;
     }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return Collections.singleton(new SimpleGrantedAuthority(role)); //tu określamy, że można mieć tylko jedną rolę
-//    }
-
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    @Override
-//    public String getUsername() {
-//        return null;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return true;
-//    }
 }
 

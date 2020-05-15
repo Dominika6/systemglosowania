@@ -19,9 +19,6 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    // TODO setDomain() - dla admina przy tworzeniu grupy
-    // a może ustawić konkretną w kodzie? TAK
-
     public List<User> addUser(String email, String name, String password, String role) {
         return userDao.insertUser(email, name, password, role);
     }
@@ -38,7 +35,6 @@ public class UserService {
         return userDao.deleteUserById(userId);
     }
 
-    //TODO editAccount: ale co z haslem?
     public List<User> updateUserEmail(UUID userId, String newEmail) {
         return userDao.updateUserEmail(userId, newEmail);
     }

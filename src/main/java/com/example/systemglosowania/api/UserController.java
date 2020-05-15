@@ -8,10 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-//import jdk.nashorn.internal.objects.NativeString;
-
-//import static jdk.nashorn.internal.objects.NativeString.toLowerCase;
-
 @RequestMapping("api/user")
 @RestController
 public class UserController {
@@ -23,7 +19,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    //adminAddsAUser i osobna funkcja jak user sam siebie dodaje, żeby user sam sobie nie nadał roli admina
     @PostMapping("/addUser/{email}/{name}/{password}/{role}")
     public String addUser(@PathVariable("email")String email,
                           @PathVariable("name") String name,
@@ -94,11 +89,4 @@ public class UserController {
         String pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
         return password.matches(pattern);
     }
-//  ^                 # start-of-string
-//  (?=.*[0-9])       # min. 1 cyfra
-//  (?=.*[a-z])       # min. 1 mała litera
-//  (?=.*[A-Z])       # min. 1 wielka litera
-//  (?=\S+$)          # brak białych znaków
-//  .{8,}             # min. 8 znaków
-//  $                 # end-of-string
 }

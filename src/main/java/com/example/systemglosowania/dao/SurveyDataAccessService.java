@@ -31,7 +31,6 @@ public class SurveyDataAccessService implements SurveyDao {
         return jdbcTemplate.query(sql, mapSurveyFromDb());
     }
 
-    // zbiór odpowiedzi na dane pytania
     @Override
     public List<Survey> getResultByQId(UUID qId) {
         final String sql = "SELECT userid, qid, answer FROM survey WHERE qid = '"+ qId +"'";
@@ -41,8 +40,6 @@ public class SurveyDataAccessService implements SurveyDao {
     @Override
     public List<Survey> ifAnswerExists(UUID userid, UUID qid) {
         final String sql = "select answer from survey where userid = '" + userid + "'and qid= '" + qid + "'";
-//        List<Survey> lista = jdbcTemplate.query(sql, mapAnswerFromDb());
-//        String ans = Survey.answerToString(lista);
         return jdbcTemplate.query(sql, mapAnswerFromDb());
     }
 

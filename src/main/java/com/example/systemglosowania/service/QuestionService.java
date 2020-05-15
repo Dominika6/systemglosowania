@@ -4,10 +4,8 @@ import com.example.systemglosowania.dao.QuestionDao;
 import com.example.systemglosowania.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;

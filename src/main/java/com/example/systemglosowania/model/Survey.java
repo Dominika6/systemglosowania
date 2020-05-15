@@ -5,7 +5,6 @@ import com.sun.istack.NotNull;
 import javax.persistence.*;
 import java.util.UUID;
 
-
 public class Survey {
 
     @Id
@@ -29,10 +28,6 @@ public class Survey {
         this.qId = qId;
         this.answer = answer;
     }
-
-//    public String answerToString(){
-//        return "" + answer + "";
-//    }
 
     @Override
     public String toString() {

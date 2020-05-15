@@ -10,9 +10,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import static org.hibernate.criterion.Restrictions.and;
 
 
 @EnableWebSecurity
@@ -37,7 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(user, admin);
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -52,28 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().permitAll()
                 .and()
                 .httpBasic()
-
-
-
-
-//                    .and()
-//                .formLogin()
-//                    .usernameParameter("username")  // TODO jakoś wpisywać tutaj email i hasło każdego usera
-//                    .passwordParameter("password")  // przy weryfikacji pamiętać, że hasło jest haszowane - crypt();
-//                    .loginPage("/login")
-//                    .defaultSuccessUrl("/home")
-//                    .permitAll()
-//                    .and()
-//                .logout()
-//                    .clearAuthentication(true)
-//                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                    .logoutUrl("/logout")
-//                    .invalidateHttpSession(true)
-////                    .deleteCookies("JSESSIONID")
-//                    .logoutSuccessUrl("/login")
-//                    .permitAll()
                 .and()
-                .csrf().disable();  //dzięki tej linijce działają POST PUT i DELETE przez zewnętrzny program jakim jest postman
-
+                .csrf().disable();
     }
 }

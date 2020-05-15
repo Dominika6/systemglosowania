@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-
 public class Question {
 
     @Id
@@ -19,10 +18,8 @@ public class Question {
     @NotNull
     private Date deadline;
 
-    // to istnieje tylko ze względu na JPA
     protected Question(){}
 
-    // ten konstruktor jest do tworzenia instancji w bazie
     public Question( UUID qId, String question, Date deadline){
         this.qId = qId;
         this.question = question;
@@ -33,8 +30,6 @@ public class Question {
     public String toString(){
         return "Question [ qId = ' " + qId + " ', question = ' " + question + " ', deadline = ' " + deadline + " ' ] ";
     }
-    // %tF 	ISO 8601 formatted date with “%tY-%tm-%td“. - już nie potrzebne
-
 
     public UUID getqId() {
         return qId;

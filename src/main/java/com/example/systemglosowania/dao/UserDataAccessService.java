@@ -15,18 +15,10 @@ public class UserDataAccessService implements UserDao{
 
     private final JdbcTemplate jdbcTemplate;
 
-    // samouczek jdbcTemplate:
-    // https://mkyong.com/spring/spring-jdbctemplate-querying-examples/
-
     @Autowired
     public UserDataAccessService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
-    //funkcja crypt(), wytłumaczone jak autoryzować - będzie potrzebne do LOGOWANIA
-    //https://www.postgresql.org/docs/current/pgcrypto.html
-
-    //TODO komunikat, że podany email jest już w bazie, bo wywala 500
 
     @Override
     public List<User> insertUser(String email, String name, String password, String role) {
