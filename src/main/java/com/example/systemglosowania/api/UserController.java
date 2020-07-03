@@ -2,6 +2,7 @@ package com.example.systemglosowania.api;
 
 import com.example.systemglosowania.model.User;
 import com.example.systemglosowania.service.UserService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 @RequestMapping("api/user")
 @RestController
+@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
@@ -43,27 +45,31 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/getUserById/{userId}")
-    public Object getUserById(@PathVariable("userId") UUID userId){
-        return userService.getUserById(userId);
+    @GetMapping("/getUserById/{userid}")
+    public Object getUserById(@PathVariable("userid") UUID userid){
+        return userService.getUserById(userid);
     }
 
-    @DeleteMapping("/deleteUserById/{userId}")
-    public List<User> deleteUserByEmail(@PathVariable("userId") UUID userId){
-        return userService.deleteUserById(userId);
+    @DeleteMapping("/deleteUserById/{userid}")
+    public String deleteUserByEmail(@PathVariable("userid") UUID userid){
+        userService.deleteUserById(userid);
+        return "User deleted. You can not undo this operation. ";
     }
 
-    @PutMapping("/updateUserEmail/{userId}/{email}")
-    public List<User> updateUserEmail(@PathVariable("userId") UUID userId,
+    @PutMapping("/updateUserEmail/{userid}/{email}")
+    public String updateUserEmail(@PathVariable("userid") String userids,
                                       @PathVariable("email") String emailToUpdate){
-        return userService.updateUserEmail(userId, emailToUpdate);
+        UUID userid = UUID.fromString(userids);
+        userService.updateUserEmail(userid, emailToUpdate);
+        return "Updated. ";
     }
 
     @PutMapping("/updateUserName/{userid}/{name}")
-    public String updateUserName(@PathVariable("userid") UUID userid,
+    public String updateUserName(@PathVariable("userid") String userids,
                                  @PathVariable("name") String nameToUpdate){
+        UUID userid = UUID.fromString(userids);
         userService.updateUserName(userid, nameToUpdate);
-        return "Updated";
+        return JSONObject.quote("Updated");
     }
 
     @PutMapping("/updatePassword/{userid}/{oldPassword}/{newPassword}")

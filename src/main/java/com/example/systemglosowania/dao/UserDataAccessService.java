@@ -30,34 +30,34 @@ public class UserDataAccessService implements UserDao{
 
     @Override
     public List<User> selectAllUsers() {
-        final String sql = "SELECT userid, name, email FROM users";
+        final String sql = "SELECT userid, name, email, role FROM users";
+        return jdbcTemplate.query(sql, mapUserWithRoleFomDb());
+    }
+
+    @Override
+    public List<User> selectUserById(UUID userid) {
+        final String sql = "SELECT userid, name, email FROM users WHERE userid='" + userid + "'";
         return jdbcTemplate.query(sql, mapUserFomDb());
     }
 
     @Override
-    public List<User> selectUserById(UUID userId) {
-        final String sql = "SELECT userid, name, email FROM users WHERE userid='" + userId + "'";
-        return jdbcTemplate.query(sql, mapUserFomDb());
-    }
-
-    @Override
-    public List<User> deleteUserById(UUID userId) {
-        final String sql1 = "DELETE FROM survey WHERE userid = '" + userId + "' RETURNING userid, qid, answer";
+    public List<User> deleteUserById(UUID userid) {
+        final String sql1 = "DELETE FROM survey WHERE userid = '" + userid + "' RETURNING userid, qid, answer";
         jdbcTemplate. query(sql1, mapSurveyFromDb());
-        final String sql2 = "DELETE FROM users WHERE userid='" + userId + "' RETURNING userid, name, email";
+        final String sql2 = "DELETE FROM users WHERE userid='" + userid + "' RETURNING userid, name, email";
         return jdbcTemplate.query(sql2, mapUserFomDb());
     }
 
     @Override
-    public List<User> updateUserEmail(UUID userId, String email) {
-        final String sql = "UPDATE users SET email = '" + email + "' WHERE userid = '" + userId + "' " +
+    public List<User> updateUserEmail(UUID userid, String email) {
+        final String sql = "UPDATE users SET email = '" + email + "' WHERE userid = '" + userid + "' " +
                 "RETURNING userid, name, email";
         return jdbcTemplate.query(sql, mapUserFomDb());
     }
 
     @Override
-    public List<User> updateUserName(UUID userId, String name) {
-        final String sql = "UPDATE users SET name = '" + name + "' WHERE userid = '" + userId + "' " +
+    public List<User> updateUserName(UUID userid, String name) {
+        final String sql = "UPDATE users SET name = '" + name + "' WHERE userid = '" + userid + "' " +
                 "RETURNING userid, name, email";
         return jdbcTemplate.query(sql, mapUserFomDb());
     }
@@ -88,8 +88,8 @@ public class UserDataAccessService implements UserDao{
 
     private RowMapper<User> mapUserFomDb() {
         return (resultSet, i) -> {
-            String userIdString = resultSet.getString("userid");
-            UUID userid = UUID.fromString(userIdString);
+            String useridString = resultSet.getString("userid");
+            UUID userid = UUID.fromString(useridString);
             String name = resultSet.getString("name");
             String email = resultSet.getString("email");
 
@@ -98,8 +98,8 @@ public class UserDataAccessService implements UserDao{
     }
     private RowMapper<User> mapUserWithRoleFomDb() {
         return (resultSet, i) -> {
-            String userIdString = resultSet.getString("userid");
-            UUID userid = UUID.fromString(userIdString);
+            String useridString = resultSet.getString("userid");
+            UUID userid = UUID.fromString(useridString);
             String name = resultSet.getString("name");
             String email = resultSet.getString("email");
             String role = resultSet.getString("role");
@@ -110,13 +110,13 @@ public class UserDataAccessService implements UserDao{
 
     private RowMapper<Survey> mapSurveyFromDb() {
         return ((resultSet, i) -> {
-            String userIdString = resultSet.getString("userId");
-            UUID userId = UUID.fromString(userIdString);
+            String useridString = resultSet.getString("userid");
+            UUID userid = UUID.fromString(useridString);
             String qIdString = resultSet.getString("qId");
             UUID qId = UUID.fromString(qIdString);
             boolean answer = resultSet.getBoolean("answer");
 
-            return new Survey(userId, qId, answer);
+            return new Survey(userid, qId, answer);
         });
     }
 }

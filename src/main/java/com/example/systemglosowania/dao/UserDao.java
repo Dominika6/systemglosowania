@@ -11,13 +11,13 @@ public interface UserDao {
 
     List<User> selectAllUsers();
 
-    List<User> selectUserById(UUID userId);
+    List<User> selectUserById(UUID userid);
 
-    List<User> deleteUserById(UUID userId);
+    List<User> deleteUserById(UUID userid);
 
-    List<User> updateUserEmail(UUID userId, String email);
+    List<User> updateUserEmail(UUID userid, String email);
 
-    List<User> updateUserName(UUID userId, String name);
+    List<User> updateUserName(UUID userid, String name);
 
     List<User> updatePassword(UUID userid, String password);
 

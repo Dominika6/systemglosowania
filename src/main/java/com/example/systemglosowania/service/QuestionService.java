@@ -28,12 +28,12 @@ public class QuestionService {
         return questionDao.selectAllQuestions();
     }
 
-    public Object getQuestionById(UUID qId){
-        return questionDao.selectQuestionById(qId);
+    public Object getQuestionById(UUID qid){
+        return questionDao.selectQuestionById(qid);
     }
 
-    public List<Question> deleteQuestionById(UUID qId){
-        return questionDao.deleteQuestionById(qId);
+    public List<Question> deleteQuestionById(UUID qid){
+        return questionDao.deleteQuestionById(qid);
     }
 
 }

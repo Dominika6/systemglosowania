@@ -8,7 +8,7 @@ public class User
 {
     @Id
     @GeneratedValue
-    private UUID userId;
+    private UUID userid;
 
     @NotNull
     private String name;
@@ -24,35 +24,35 @@ public class User
 
     protected User(){}
 
-    public User(UUID userId, String name, String email, String role, String password) {
-        this.userId = userId;
+    public User(UUID userid, String name, String email, String role, String password) {
+        this.userid = userid;
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
-    public User(UUID userId, String name, String email, String role){
-        this.userId = userId;
+    public User(UUID userid, String name, String email, String role){
+        this.userid = userid;
         this.name = name;
         this.email = email;
         this.role = role;
     }
 
-    public User(UUID userId, String name, String email){
-        this.userId = userId;
+    public User(UUID userid, String name, String email){
+        this.userid = userid;
         this.name = name;
         this.email = email;
     }
 
     @Override
     public String toString(){
-        return "User [ userId = ' " + userId + " ', name = ' " + name + " ', email = ' " + email + "', " +
+        return "User [ userid = ' " + userid + " ', name = ' " + name + " ', email = ' " + email + "', " +
                 "role = ' " + role +"']";
     }
 
     public UUID getId(){
-        return userId;
+        return userid;
     }
 
     public String getName() {

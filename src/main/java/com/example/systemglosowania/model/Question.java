@@ -10,7 +10,7 @@ public class Question {
 
     @Id
     @GeneratedValue
-    private UUID qId;
+    private UUID qid;
 
     @NotNull
     private String question;
@@ -20,19 +20,19 @@ public class Question {
 
     protected Question(){}
 
-    public Question( UUID qId, String question, Date deadline){
-        this.qId = qId;
+    public Question( UUID qid, String question, Date deadline){
+        this.qid = qid;
         this.question = question;
         this.deadline = deadline;
     }
 
     @Override
     public String toString(){
-        return "Question [ qId = ' " + qId + " ', question = ' " + question + " ', deadline = ' " + deadline + " ' ] ";
+        return "Question [ qid = ' " + qid + " ', question = ' " + question + " ', deadline = ' " + deadline + " ' ] ";
     }
 
-    public UUID getqId() {
-        return qId;
+    public UUID getQid() {
+        return qid;
     }
 
     public String getQuestion() {

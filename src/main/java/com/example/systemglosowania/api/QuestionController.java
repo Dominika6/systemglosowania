@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @RequestMapping("api/questions")
 @RestController
+@CrossOrigin("*")
 public class QuestionController {
 
     private final QuestionService questionService;
@@ -22,9 +23,10 @@ public class QuestionController {
     }
 
     @PostMapping("/addQuestion/{question}/{deadline}")
-    public List<Question> addQuestion(@PathVariable("question") String questionString,
+    public String addQuestion(@PathVariable("question") String questionString,
                                       @PathVariable("deadline") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline) {
-            return questionService.addQuestion(questionString, deadline);
+            questionService.addQuestion(questionString, deadline);
+            return "Question added. ";
     }
 
     @GetMapping("/getAllQuestions")
@@ -32,14 +34,15 @@ public class QuestionController {
         return questionService.getAllQuestions();
     }
 
-    @GetMapping("/getQuestionById/{qId}")
-    public Object getQuestionById(@PathVariable("qId") UUID qId){
-        return questionService.getQuestionById(qId);
+    @GetMapping("/getQuestionById/{qid}")
+    public Object getQuestionById(@PathVariable("qid") UUID qid){
+        return questionService.getQuestionById(qid);
     }
 
-    @DeleteMapping("/deleteQuestionById/{qId}")
-    public List<Question> deleteQuestionById(@PathVariable("qId") UUID qId){
-        return questionService.deleteQuestionById(qId);
+    @DeleteMapping("/deleteQuestionById/{qid}")
+    public String deleteQuestionById(@PathVariable("qid") UUID qid){
+        questionService.deleteQuestionById(qid);
+        return "Question deleted. ";
     }
 
 

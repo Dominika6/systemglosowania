@@ -9,11 +9,11 @@ public class Survey {
 
     @Id
     @NotNull
-    private UUID userId;
+    private UUID userid;
 
     @Id
     @NotNull
-    private UUID qId;
+    private UUID qid;
 
     private boolean answer;
 
@@ -23,9 +23,9 @@ public class Survey {
         this.answer = answer;
     }
 
-    public Survey(UUID userId, UUID qId, boolean answer) {
-        this.userId = userId;
-        this.qId = qId;
+    public Survey(UUID userid, UUID qid, boolean answer) {
+        this.userid = userid;
+        this.qid = qid;
         this.answer = answer;
     }
 
@@ -34,15 +34,15 @@ public class Survey {
         return "" + answer + "";
     }
 
-    public UUID getUserId() {
-        return userId;
+    public UUID getUserid() {
+        return userid;
     }
 
-    public UUID getqId() {
-        return qId;
+    public UUID getQid() {
+        return qid;
     }
 
-    public boolean isAnswer() {
+    public boolean getAnswer() {
         return answer;
     }
 }

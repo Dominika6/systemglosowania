@@ -35,40 +35,40 @@ public class QuestionDataAccessService implements QuestionDao {
     }
 
     @Override
-    public Object selectQuestionById(UUID qId) {
-        final String sql = "SELECT qid, question, deadline FROM questions WHERE qid = '" + qId + "'";
+    public Object selectQuestionById(UUID qid) {
+        final String sql = "SELECT qid, question, deadline FROM questions WHERE qid = '" + qid + "'";
         return jdbcTemplate.query(sql, mapQuestionFromDb());
     }
 
     @Override
-    public List<Question> deleteQuestionById(UUID qId){
-        final String sql1 = "DELETE FROM survey WHERE qid = '" + qId + "' RETURNING userid, qid, answer";
+    public List<Question> deleteQuestionById(UUID qid){
+        final String sql1 = "DELETE FROM survey WHERE qid = '" + qid + "' RETURNING userid, qid, answer";
         jdbcTemplate.query(sql1, mapSurveyFromDb());
-        final String sql2 = "DELETE FROM questions WHERE qid = '" + qId + "' RETURNING qid, question, deadline";
+        final String sql2 = "DELETE FROM questions WHERE qid = '" + qid + "' RETURNING qid, question, deadline";
         return jdbcTemplate.query(sql2, mapQuestionFromDb());
 
     }
 
     private RowMapper<Question> mapQuestionFromDb() {
         return ((resultSet, i) -> {
-            String qIdString = resultSet.getString("qId");
-            UUID qId = UUID.fromString(qIdString);
+            String qidString = resultSet.getString("qid");
+            UUID qid = UUID.fromString(qidString);
             String question = resultSet.getString("question");
             Date deadline = resultSet.getDate("deadline");
 
-            return new Question( qId, question, deadline);
+            return new Question( qid, question, deadline);
         });
     }
 
     private RowMapper<Survey> mapSurveyFromDb() {
         return ((resultSet, i) -> {
-            String userIdString = resultSet.getString("userId");
-            UUID userId = UUID.fromString(userIdString);
-            String qIdString = resultSet.getString("qId");
-            UUID qId = UUID.fromString(qIdString);
+            String useridString = resultSet.getString("userid");
+            UUID userid = UUID.fromString(useridString);
+            String qidString = resultSet.getString("qid");
+            UUID qid = UUID.fromString(qidString);
             boolean answer = resultSet.getBoolean("answer");
 
-            return new Survey(userId, qId, answer);
+            return new Survey(userid, qid, answer);
         });
     }
 

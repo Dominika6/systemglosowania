@@ -7,11 +7,11 @@ import java.util.UUID;
 
 public interface SurveyDao {
 
-    List<Survey> addAnswer(UUID userID, UUID qID, boolean answer);
+    List<Survey> addAnswer(UUID userid, UUID qid, boolean answer);
 
-    List<Survey> getMyAnswers(UUID userId);
+    List<Survey> getMyAnswers(UUID userid);
 
-    List<Survey> getResultByQId(UUID qId);
+    List<Survey> getResultByQid(UUID qid);
 
     List<Survey> ifAnswerExists (UUID userid, UUID qid);
 }

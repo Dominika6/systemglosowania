@@ -33,3 +33,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### frontend ###
+node_modules/
+*.ico
+*.json
+*.txt
+*.png

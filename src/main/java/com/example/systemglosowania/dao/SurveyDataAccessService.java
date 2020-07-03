@@ -20,20 +20,20 @@ public class SurveyDataAccessService implements SurveyDao {
     }
 
     @Override
-    public List<Survey> addAnswer(UUID userId, UUID qId, boolean answer) {
-        final String sql = "INSERT INTO survey (userid, qid, answer) VALUES('" + userId + "','"+ qId +"','"+ answer +"') RETURNING userid, qid, answer";
+    public List<Survey> addAnswer(UUID userid, UUID qid, boolean answer) {
+        final String sql = "INSERT INTO survey (userid, qid, answer) VALUES('" + userid + "','"+ qid +"','"+ answer +"') RETURNING userid, qid, answer";
         return jdbcTemplate.query(sql,mapSurveyFromDb());
     }
 
     @Override
-    public List<Survey> getMyAnswers(UUID userId) {
-        final String sql = "SELECT userid, qid, answer FROM survey WHERE userid = '"+ userId+"'";
+    public List<Survey> getMyAnswers(UUID userid) {
+        final String sql = "SELECT userid, qid, answer FROM survey WHERE userid = '"+ userid+"'";
         return jdbcTemplate.query(sql, mapSurveyFromDb());
     }
 
     @Override
-    public List<Survey> getResultByQId(UUID qId) {
-        final String sql = "SELECT userid, qid, answer FROM survey WHERE qid = '"+ qId +"'";
+    public List<Survey> getResultByQid(UUID qid) {
+        final String sql = "SELECT userid, qid, answer FROM survey WHERE qid = '"+ qid +"'";
         return jdbcTemplate.query(sql, mapSurveyFromDb());
     }
 
@@ -52,13 +52,13 @@ public class SurveyDataAccessService implements SurveyDao {
 
     private RowMapper<Survey> mapSurveyFromDb() {
         return ((resultSet, i) -> {
-            String userIdString = resultSet.getString("userId");
-            UUID userId = UUID.fromString(userIdString);
-            String qIdString = resultSet.getString("qId");
-            UUID qId = UUID.fromString(qIdString);
+            String useridString = resultSet.getString("userid");
+            UUID userid = UUID.fromString(useridString);
+            String qidString = resultSet.getString("qid");
+            UUID qid = UUID.fromString(qidString);
             boolean answer = resultSet.getBoolean("answer");
 
-            return new Survey(userId, qId, answer);
+            return new Survey(userid, qid, answer);
         });
     }
 }

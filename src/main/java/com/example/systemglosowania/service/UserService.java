@@ -27,20 +27,20 @@ public class UserService {
         return userDao.selectAllUsers();
     }
 
-    public List<User> getUserById(UUID userId) {
-        return userDao.selectUserById(userId);
+    public List<User> getUserById(UUID userid) {
+        return userDao.selectUserById(userid);
     }
 
-    public List<User> deleteUserById(UUID userId) {
-        return userDao.deleteUserById(userId);
+    public List<User> deleteUserById(UUID userid) {
+        return userDao.deleteUserById(userid);
     }
 
-    public List<User> updateUserEmail(UUID userId, String newEmail) {
-        return userDao.updateUserEmail(userId, newEmail);
+    public List<User> updateUserEmail(UUID userid, String newEmail) {
+        return userDao.updateUserEmail(userid, newEmail);
     }
 
-    public List<User> updateUserName(UUID userId, String newName) {
-        return userDao.updateUserName(userId, newName);
+    public List<User> updateUserName(UUID userid, String newName) {
+        return userDao.updateUserName(userid, newName);
     }
     public List<User> updatePassword(UUID userid, String newPassword){
         return userDao.updatePassword(userid, newPassword);
