@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
+
 export default class AdminDeleteQuestion extends Component{
 
     constructor(props) {
@@ -20,7 +21,6 @@ export default class AdminDeleteQuestion extends Component{
 
     submitName = event => {
         event.preventDefault()
-        // console.log(this.state.qid)
         axios.delete("http://localhost:8080/api/questions/deleteQuestionById/" + this.state.qid)
             .then(response => {
                 if(response.data != null){

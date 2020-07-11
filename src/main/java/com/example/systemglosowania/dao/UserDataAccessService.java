@@ -36,8 +36,8 @@ public class UserDataAccessService implements UserDao{
 
     @Override
     public List<User> selectUserById(UUID userid) {
-        final String sql = "SELECT userid, name, email FROM users WHERE userid='" + userid + "'";
-        return jdbcTemplate.query(sql, mapUserFomDb());
+        final String sql = "SELECT userid, name, email, role FROM users WHERE userid='" + userid + "'";
+        return jdbcTemplate.query(sql, mapUserWithRoleFomDb());
     }
 
     @Override

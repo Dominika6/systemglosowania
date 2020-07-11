@@ -14,7 +14,7 @@ import AdminManageSurveys from "./components/AdminManageSurveys";
 import AdminSurveyResults from "./components/AdminSurveyResults";
 import Switch from "react-bootstrap/cjs/Switch";
 import AdminAccount from "./components/AdminAccount";
-
+import Login, {getIsLoggedAsAdmin, getIsLoggedIn} from "./components/Login";
 
 export default function App() {
 
@@ -22,22 +22,34 @@ export default function App() {
         marginTop:"20px"
     };
 
+    const isLoggedIn= getIsLoggedIn();
+
+    const isAdmin = getIsLoggedAsAdmin();
+
+
     return (
         <Router>
-            <NavigationBar/>
+            {isLoggedIn && <NavigationBar/>}
             <Container>
                 <Row>
                     <Col lg={12} style={marginTop}>
                         <Switch>
-                            <Route path="/" exact component={Welcome}/>
-                            <Route path="/editAccount" exact component={EditAccount}/>
-                            <Route path="/castYourVote" exact component={CastYourVote}/>
+                            {!isLoggedIn && <Route path="/" exact component={Login}/>}
 
-                            <Route path="/admin/yourAccount" exact component={AdminAccount}/>
-                            <Route path="/admin/manageUserAccounts" exact component={AdminManageUserAccounts}/>
-                            <Route path="/admin/manageSurveys" exact component={AdminManageSurveys}/>
-                            <Route path="/admin/surveyResults" exact component={AdminSurveyResults}/>
-                            {/*<Route path="/radiobut" exact component={Radiobut}/>*/}
+                            {isLoggedIn && <>
+                                <Route path="/" exact component={Welcome}/>
+                                <Route path="/editAccount" exact component={EditAccount}/>
+                                <Route path="/castYourVote" exact component={CastYourVote}/>
+                            </>}
+
+                            {isAdmin && <>
+
+                                <Route path="/admin/yourAccount" exact component={AdminAccount}/>
+                                <Route path="/admin/manageUserAccounts" exact component={AdminManageUserAccounts}/>
+                                <Route path="/admin/manageSurveys" exact component={AdminManageSurveys}/>
+                                <Route path="/admin/surveyResults" exact component={AdminSurveyResults}/>
+                            </>}
+
                         </Switch>
                     </Col>
                 </Row>
@@ -46,4 +58,5 @@ export default function App() {
         </Router>
     );
 }
+
 

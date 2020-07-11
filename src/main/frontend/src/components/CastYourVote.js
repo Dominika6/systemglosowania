@@ -10,11 +10,9 @@ export default class CastYourVote extends Component{
         return(
             <div>
                 <AddAnswer/>
-                <br/>
                 <MyAnswers/>
                 <br/>
-                {/*<br/>*/}
-            </div>
+\            </div>
         );
     };
 }

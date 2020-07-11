@@ -3,8 +3,6 @@ package com.example.systemglosowania.api;
 import com.example.systemglosowania.model.Survey;
 import com.example.systemglosowania.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,21 +19,6 @@ public class SurveyController {
     public SurveyController(SurveyService surveyService) {
         this.surveyService = surveyService;
     }
-
-//    @PostMapping("/addAnswer")  //nie dostaje tu danych
-//    public void addAnswer(@RequestBody Survey survey){
-//        System.out.println(survey.getUserid() + " " + survey.getQid() + " " + survey.getAnswer());
-//        surveyService.addAnswer(survey.getUserid(), survey.getQid(), survey.getAnswer());
-//        }
-//    }
-
-//  @PostMapping("/addAnswer/{userid}/{qid}/{answer}")
-//                          (@PathVariable("userid") UUID userid,
-//                          @PathVariable("qid") UUID qid,
-//                          @PathVariable("answer") boolean answer)
-//    (@RequestBody("userid") UUID userid, //ogarnąć jaka to ma być składnia
-//    @RequestBody("qid") UUID qid,
-//    @RequestBody("answer") boolean answer)
 
     @PostMapping("/addAnswer/{userid}/{qid}/{answer}") //tu nie jest dobrze jak mam answer - coś przekazane postem
                                                         //obiekt przekazany postem -inna metoda zamiast PathVariable

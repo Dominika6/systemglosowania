@@ -11,9 +11,7 @@ export default class AdminManageUserAccounts extends Component{
         return(
         <div>
                 <AdminAddQuestion/>
-                <br/>
                 <ViewSurveys/>
-                <br/>
                 <AdminDeleteQuestion/>
                 <br/>
                 <br/>

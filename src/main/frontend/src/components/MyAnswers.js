@@ -74,9 +74,6 @@ export default class MyAnswers extends Component{
                                         </tr>
                                     ))
                                 }
-                                <Form.Text className="text-muted">
-                                    Żeby wyświetlić odpowiednie dane trzeba jakoś podać do Springa userid. Ten sam problem co w całej reszcie.
-                                </Form.Text>
                             </tbody>
                         </Table>
                     </Card.Body>

@@ -18,7 +18,9 @@
     "react-dropzone": "^11.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "react-widgets": "^4.5.0"
+    "react-validation": "^3.0.7",
+    "react-widgets": "^4.5.0",
+    "validator": "^13.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

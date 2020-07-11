@@ -2,7 +2,6 @@ package com.example.systemglosowania.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,6 +10,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 
 @EnableWebSecurity
@@ -18,45 +20,19 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Bean
-    public UserDetailsService userDetailsService(){
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("user")
-                .roles("USER")
-                .build();
-
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("admin")
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user1").password("user1Pass")
-                .authorities("USER")
-                .and().withUser("admin").password("adminPass")
-                .authorities("ADMIN");
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+//                .cors().and()
                 .authorizeRequests()
-                    .antMatchers("/api/user/updateUserEmail/**", "/api/user/updateUserName/**", "/api/user/updatePassword/**",
-                        "/api/questions/getAllQuestions", "/api/questions/getQuestionById",
-                        "/api/survey/addAnswer/**", "/api/survey/getMyAnswers/**").hasRole("USER")
-                    .antMatchers("/api/user/**", "/api/questions/**", "/api/survey/getResultByQId/**").hasRole("ADMIN")
+//                    .antMatchers("/api/user/updateUserEmail/**", "/api/user/updateUserName/**", "/api/user/updatePassword/**",
+//                        "/api/questions/getAllQuestions", "/api/questions/getQuestionById",
+//                        "/api/survey/addAnswer/**", "/api/survey/getMyAnswers/**").hasRole("USER")
+//                    .antMatchers("/api/user/**", "/api/questions/**", "/api/survey/getResultByQId/**").hasRole("ADMIN")
                     .antMatchers("api/**").permitAll()
                     .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
                     .and()
                 .logout()
                     .permitAll()
@@ -65,5 +41,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .csrf()
                     .disable();
+
     }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        return source;
+    }
+
+
+    @Bean
+    public UserDetailsService userDetailsService(){
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("user@student.uj.edu.pl")
+                .password("user")
+                .roles("USER")
+                .build();
+
+        UserDetails admin = User.withDefaultPasswordEncoder()
+                .username("admin@student.uj.edu.pl")
+                .password("admin")
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(user, admin);
+    }
+
 }

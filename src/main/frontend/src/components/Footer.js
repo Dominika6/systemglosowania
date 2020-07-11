@@ -10,7 +10,7 @@ export default class Footer extends Component{
                 <Container>
                     <Col lg={12} className="text-center text-muted">
                         <div>
-                            {fullYear}, All Rigths Reserved by Dominika Jadach
+                            {fullYear}, All Rigths Reserved by Dominika Jadach, Jagiellonian University
                         </div>
                     </Col>
                 </Container>

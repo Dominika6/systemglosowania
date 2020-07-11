@@ -3,7 +3,6 @@ import {Button, Card, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faList, faTrash} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
-// import Form from "react-bootstrap/Form";
 
 export default class AdminGetAllUsers extends Component{
 
@@ -15,26 +14,27 @@ export default class AdminGetAllUsers extends Component{
         this.nameChange = this.nameChange.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
     }
-    // initialState = {
-    //     userid:''
-    // }
 
-    deleteUser = event => {
-        console.log(this.id);
+
+    deleteUser = (event, user) => {
+
+        console.log(user.id);
 
         event.preventDefault()
-        // {this.setState({userid : this.users.id})}
         this.setState({
             [event.target.name]:event.target.value
         });
 
-        axios.delete("http://localhost:8080/api/user/deleteUserById/" + this.state.id)
+        if (!window.confirm("Jesteś pewny?")) {
+            return;
+        }
+
+        axios.delete("http://localhost:8080/api/user/deleteUserById/" + user.id)
             .then(response => {
                 console.log("w axiosie")
                 if(response.data != null){
-                    // this.setState(this.initialState);
                     alert(response.data);
-                    // window.location.reload();
+                    window.location.reload();
                 }
                 console.log("tu")
             });
@@ -65,7 +65,6 @@ export default class AdminGetAllUsers extends Component{
                 <Card.Header><FontAwesomeIcon icon={faList}/> &nbsp; Users</Card.Header>
                 <Card.Body>
                     <Table bordered hover variant="dark">
-                        {/*powyżej było dodane stripped ale generowało błędy*/}
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -88,20 +87,11 @@ export default class AdminGetAllUsers extends Component{
                                     <td>{user.email}</td>
                                     <td>{user.role}</td>
                                     <td>
-                                        {/*<Form onSubmit={user.deleteUser} id="nameFormId">*/}
-                                            {/*<Form.Group as={Col} controlId="formGridId">*/}
-                                                {/*<Form.Control required name="userid" value={this.state.userid}*/}
-                                                {/*              onChange={this.nameChange} autoComplete="off"*/}
-                                                {/*              className="bg-dark text-white"*/}
-                                                {/*              placeholder="Enter the user ID you want to delete. "/>*/}
-
-                                            {/*</Form.Group>*/}
-                                        {/*{console.log(user.id)}*/}
-                                        <form action={user.deleteUser} id="nameFormId">
-                                        <Button size="sm" variant="danger" type="submit">
+                                        {/*<form onSubmit={user.deleteUser} id="nameFormId">*/}
+                                        <Button size="sm" variant="danger" type="submit" onClick={event => this.deleteUser(event, user)}>
                                                 <FontAwesomeIcon icon={faTrash} />&nbsp; Delete
-                                            </Button></form>
-                                        {/*</Form>*/}
+                                            </Button>
+                                        {/*</form>*/}
                                     </td>
                                 </tr>
                             ))

@@ -4,6 +4,7 @@ import {Card, Form, Button, Col} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import {getCurrentUserId} from "./Login";
 
 export default class NewEmail extends Component{
 
@@ -19,14 +20,24 @@ export default class NewEmail extends Component{
     }
 
     submitEmail = event => {
+        const userid = getCurrentUserId();
+
+        if (!userid) {
+            alert('niezalogowany');
+            return;
+        }
+
+        console.log('user id', userid);
+
+        const encodedEmail = encodeURIComponent(this.state.email);
+
         event.preventDefault()
-        axios.put("http://localhost:8080/api/user/updateUserEmail/" + this.state.userid + "/" + this.state.email)
+        axios.put("http://localhost:8080/api/user/updateUserEmail/" + userid + "/" + encodedEmail)
             .then(response => {
                 if(response.data != null){
                     this.setState(this.initialState);
                     alert(response.data);
                     window.location.reload();
-
                 }
             });
     }
@@ -50,13 +61,13 @@ export default class NewEmail extends Component{
                         <Form.Label> <FontAwesomeIcon icon={faEdit} /> &nbsp; Edit Email Address: </Form.Label></Card.Header>
                     <div>
                         <br/>
-                        <Form.Group as={Col} controlId="formGridNewEmail">
-                            <Form.Label>Your ID</Form.Label>
-                            <Form.Control required name="userid" value={userid}
-                                      onChange={this.emailChange} autoComplete="off"
-                                      className="bg-dark text-white"
-                                      placeholder="Enter Your Id"/>
-                        </Form.Group>
+                        {/*<Form.Group as={Col} controlId="formGridNewEmail">*/}
+                        {/*    <Form.Label>Your ID</Form.Label>*/}
+                        {/*    <Form.Control required name="userid" value={userid}*/}
+                        {/*              onChange={this.emailChange} autoComplete="off"*/}
+                        {/*              className="bg-dark text-white"*/}
+                        {/*              placeholder="Enter Your Id"/>*/}
+                        {/*</Form.Group>*/}
                         <Form.Group as={Col} controlId="formGridNewEmail">
 
                         <Form.Label>New email:</Form.Label>

@@ -44,6 +44,4 @@ public class QuestionController {
         questionService.deleteQuestionById(qid);
         return "Question deleted. ";
     }
-
-
 }

@@ -1,8 +1,9 @@
 import React, {Component} from "react";
-import {Card, Table} from "react-bootstrap";
+import {Button, Card, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faList} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
+import {getApiUrl} from "../utils/apiUrl";
 
 export default class ViewSurveys extends Component{
 
@@ -15,6 +16,30 @@ export default class ViewSurveys extends Component{
 
     componentDidMount() {
         this.findAllQuestions();
+    }
+
+    deleteQuestion(event, question) {
+        if (!window.confirm("Are you sure?")) {
+            return;
+        }
+
+        event.preventDefault();
+
+
+        const url = getApiUrl(`/questions/deleteQuestionById/${question.qid}`);
+
+        console.log(question);
+        console.log('question id', question.qid);
+
+
+        axios.delete(url)
+            .then(response => {
+                if(response.data != null){
+
+                    alert(response.data);
+                    window.location.reload();
+                }
+            });
     }
 
     findAllQuestions(){
@@ -36,6 +61,7 @@ export default class ViewSurveys extends Component{
                             <th>ID</th>
                             <th>Question</th>
                             <th>Deadline</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -44,10 +70,11 @@ export default class ViewSurveys extends Component{
                                 <td colSpan="6"> No Questions Available.</td>
                             </tr> :
                             this.state.surveys.map((question) => (
-                                <tr key={question.id}>
+                                <tr key={question.qid}>
                                     <td>{question.qid}</td>
                                     <td>{question.question}</td>
                                     <td>{question.deadline}</td>
+                                    <td><Button onClick={event => this.deleteQuestion(event, question)}>Delete</Button></td>
                                 </tr>
                             ))
                         }
