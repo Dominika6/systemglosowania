@@ -4,6 +4,8 @@ import {Card, Form, Button, Col} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import {getCurrentUserId} from "./Login";
+import {getApiUrl} from "../utils/apiUrl";
 
 export default class NewName extends Component{
 
@@ -19,8 +21,15 @@ export default class NewName extends Component{
     }
 
     submitName = event => {
+        const userid = getCurrentUserId();
+
+        if (!userid){
+            alert('');
+            return;
+        }
+
         event.preventDefault()
-        axios.put("http://localhost:8080/api/user/updateUserName/" + this.state.userid + "/" + this.state.name)
+        axios.put(getApiUrl() + "/api/user/updateUserName/" + userid + "/" + this.state.name)
             .then(response => {
                 if(response.data != null){
                     this.setState(this.initialState);
@@ -36,11 +45,8 @@ export default class NewName extends Component{
         });
     }
 
-    componentDidMount() {
-    }
-
     render(){
-        const {userid, name} = this.state;
+        const { name} = this.state;
 
         return(
             <Card className={"border border-dark bg-dark text-white"}>
@@ -50,14 +56,6 @@ export default class NewName extends Component{
                     <div>
                         <br/>
                         <Form.Group as={Col} controlId="formGridNewName">
-                            <Form.Label>Your ID</Form.Label>
-                            <Form.Control required name="userid" value={userid}
-                                          onChange={this.nameChange} autoComplete="off"
-                                          className="bg-dark text-white"
-                                          placeholder="Enter Your Id"/>
-                        </Form.Group>
-                        <Form.Group as={Col} controlId="formGridNewName">
-
                             <Form.Label>New Name:</Form.Label>
                             <Form.Control required autoComplete="off"
                                           name="name" onChange={this.nameChange}
@@ -66,7 +64,6 @@ export default class NewName extends Component{
                                           placeholder="Enter new name" />
                         </Form.Group>
                     </div>
-
                     <br/>
                     <Card.Footer style={{"textAlign":"right"}}>
                         <Button size="sm" variant="success" type="submit">

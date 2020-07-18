@@ -27,10 +27,7 @@ export default class NewEmail extends Component{
             return;
         }
 
-        console.log('user id', userid);
-
         const encodedEmail = encodeURIComponent(this.state.email);
-
         event.preventDefault()
         axios.put("http://localhost:8080/api/user/updateUserEmail/" + userid + "/" + encodedEmail)
             .then(response => {
@@ -48,11 +45,9 @@ export default class NewEmail extends Component{
         });
     }
 
-    componentDidMount() {
-    }
 
     render(){
-        const {userid, email} = this.state;
+        const { email} = this.state;
 
         return(
             <Card className={"border border-dark bg-dark text-white"}>
@@ -61,15 +56,7 @@ export default class NewEmail extends Component{
                         <Form.Label> <FontAwesomeIcon icon={faEdit} /> &nbsp; Edit Email Address: </Form.Label></Card.Header>
                     <div>
                         <br/>
-                        {/*<Form.Group as={Col} controlId="formGridNewEmail">*/}
-                        {/*    <Form.Label>Your ID</Form.Label>*/}
-                        {/*    <Form.Control required name="userid" value={userid}*/}
-                        {/*              onChange={this.emailChange} autoComplete="off"*/}
-                        {/*              className="bg-dark text-white"*/}
-                        {/*              placeholder="Enter Your Id"/>*/}
-                        {/*</Form.Group>*/}
                         <Form.Group as={Col} controlId="formGridNewEmail">
-
                         <Form.Label>New email:</Form.Label>
                         <Form.Control required autoComplete="off"
                                       name="email" onChange={this.emailChange}
@@ -78,7 +65,6 @@ export default class NewEmail extends Component{
                                       placeholder="Enter new email address" />
                         </Form.Group>
                     </div>
-
                     <br/>
                     <Card.Footer style={{"textAlign":"right"}}>
                         <Button size="sm" variant="success" type="submit">

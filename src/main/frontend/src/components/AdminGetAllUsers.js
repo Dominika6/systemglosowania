@@ -71,7 +71,7 @@ export default class AdminGetAllUsers extends Component{
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
-                                <th> </th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
 
@@ -87,11 +87,9 @@ export default class AdminGetAllUsers extends Component{
                                     <td>{user.email}</td>
                                     <td>{user.role}</td>
                                     <td>
-                                        {/*<form onSubmit={user.deleteUser} id="nameFormId">*/}
                                         <Button size="sm" variant="danger" type="submit" onClick={event => this.deleteUser(event, user)}>
                                                 <FontAwesomeIcon icon={faTrash} />&nbsp; Delete
                                             </Button>
-                                        {/*</form>*/}
                                     </td>
                                 </tr>
                             ))

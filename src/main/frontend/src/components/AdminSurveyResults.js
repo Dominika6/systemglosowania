@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faList} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 
+
 export default class AdminSurveyResults extends Component{
 
     constructor(props) {
@@ -21,9 +22,6 @@ export default class AdminSurveyResults extends Component{
             .then((data) => {
                 this.setState({surveys : data});
             });
-    }
-
-    componentDidMount() {
     }
 
     idChange = event => {

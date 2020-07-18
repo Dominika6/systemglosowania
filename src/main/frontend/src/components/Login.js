@@ -1,18 +1,18 @@
 import React, {Component} from "react";
-
-import {Card, Form, Button, Col, Row} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSave, faPlusSquare, faUndo} from "@fortawesome/free-solid-svg-icons";
+import {Button} from "react-bootstrap";
 import axios from 'axios';
+// import Card from "react-bootstrap/Card";
+// import Form from "react-bootstrap/Form";
+// import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+// import {faAlignLeft, faLock} from "@fortawesome/free-solid-svg-icons";
+
 
 export function getCurrentUser() {
     const savedUserJson = window.localStorage.getItem('currentUser');
     const savedUser = JSON.parse(savedUserJson);
-
     if (!savedUser) {
         return null;
     }
-
     return savedUser[0];
 }
 
@@ -22,6 +22,7 @@ export function getCurrentUserId() {
     if (!user) {
         return null;
     }
+
     return user.id;
 }
 
@@ -82,21 +83,39 @@ export default class Login extends Component{
     }
 
     render() {
-        const {userid, qid} = this.state;
-
         return(
-            <div>
-                {getIsLoggedIn() && <>
-                    <button onClick={this.handleLogoout}>Wyloguj sie</button>
-                </>}
-                {!getIsLoggedIn() && <>
-                    user: <br/> 8a08a707-2897-444d-9112-c13d24e5a592
-                    <br/> admin: <br/> 7f5caae4-2977-4638-badb-ff190bf44d17 <br/>
-                    <input placeholder="Twoje id" value={this.state.userId} onChange={event => this.changeId(event.target.value)} />
-                    <button onClick={this.handleSubmit}>Login</button>
-                </>}
+            <>
+             {/*<Card className={"border border-dark bg-dark text-white"}>*/}
+             {/*   <Form onReset={this.resetAnswer} onSubmit={this.submitName} id="nameFormId">*/}
+             {/*       <Card.Header><FontAwesomeIcon icon={faLock}/> &nbsp; Sign In </Card.Header>*/}
+             {/*       <Card.Body>*/}
 
-            </div>
+                        {getIsLoggedIn() && <>
+                            <Button onClick={this.handleLogoout}>Wyloguj sie</Button>
+                        </>}
+
+                        {!getIsLoggedIn() && <>
+                            user: <br/> ef691692-805e-4d44-89f4-3bc0c38bcc00 <br/> <br/>
+                            admin: <br/> 7f5caae4-2977-4638-badb-ff190bf44d17 <br/>
+
+
+                    {/*<Card.Footer style={{"textAlign":"right"}}>*/}
+                    {/*    <input style={faAlignLeft} placeholder="Enter Your ID" value={this.state.userId} onChange={event => this.changeId(event.target.value)} />*/}
+
+                    {/*    <Button size="sm" variant="success" type="submit" onClick={this.handleSubmit} onChange={event => this.changeId(event.target.value)}>*/}
+                    {/*        <FontAwesomeIcon icon={"fort-awesome"} />&nbsp; Login*/}
+                    {/*    </Button>*/}
+                    {/*</Card.Footer>*/}
+
+
+                    <input placeholder="Enter Your ID" value={this.state.userId} onChange={event => this.changeId(event.target.value)} />
+                    <button  variant="success" onClick={this.handleSubmit}>Login</button>
+                    </>}
+
+             {/*       </Card.Body>*/}
+             {/*   </Form>*/}
+             {/*</Card>*/}
+            </>
         );
     };
 }

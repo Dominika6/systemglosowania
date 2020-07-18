@@ -15,6 +15,7 @@ import AdminSurveyResults from "./components/AdminSurveyResults";
 import Switch from "react-bootstrap/cjs/Switch";
 import AdminAccount from "./components/AdminAccount";
 import Login, {getIsLoggedAsAdmin, getIsLoggedIn} from "./components/Login";
+import NavigationBar2 from "./components/NavigationBar2";
 
 export default function App() {
 
@@ -30,6 +31,7 @@ export default function App() {
     return (
         <Router>
             {isLoggedIn && <NavigationBar/>}
+            {!isLoggedIn && <NavigationBar2/>}
             <Container>
                 <Row>
                     <Col lg={12} style={marginTop}>

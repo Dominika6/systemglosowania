@@ -12,7 +12,7 @@ export default class CastYourVote extends Component{
                 <AddAnswer/>
                 <MyAnswers/>
                 <br/>
-\            </div>
+            </div>
         );
     };
 }

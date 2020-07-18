@@ -4,6 +4,7 @@ import {Card, Form, Button, Col, Row} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSave, faPlusSquare, faUndo} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
+import {getCurrentUserId} from "./Login";
 
 export default class CastYourVote extends Component{
 
@@ -23,9 +24,15 @@ export default class CastYourVote extends Component{
     }
 
     submitAnswer = event => {
+        const userid = getCurrentUserId();
+
+        if (!userid) {
+            alert('niezalogowany');
+            return;
+        }
         event.preventDefault()
-        console.log( this.state.userid + "/" + this.state.qid +"/"+ this.state.selectedOption)
-        axios.post("http://localhost:8080/api/survey/addAnswer/" + this.state.userid + "/" + this.state.qid +"/"+ this.state.selectedOption)
+        // console.log( userid + "/" + this.state.qid +"/"+ this.state.selectedOption)
+        axios.post("http://localhost:8080/api/survey/addAnswer/" + userid + "/" + this.state.qid +"/"+ this.state.selectedOption)
             .then(response => {
                 alert(response.data);
                 window.location.reload();
@@ -45,7 +52,7 @@ export default class CastYourVote extends Component{
     };
 
     render() {
-        const {userid, qid} = this.state;
+        const {qid} = this.state;
 
         return(
             <Card className={"border border-dark bg-dark text-white"}>
@@ -53,16 +60,6 @@ export default class CastYourVote extends Component{
 
                 <Form onReset={this.resetAnswer} onSubmit={this.submitAnswer} id="answerFormId">
                     <Card.Body>
-                        <Form.Row>
-                            <Form.Group as={Col} controlId="formGridUserid">
-                                <Form.Label>Your ID</Form.Label>
-                                <Form.Control required autoComplete="off"
-                                              name="userid"
-                                              value={userid} onChange={this.answerChange}
-                                              className="bg-dark text-white"
-                                              placeholder="Enter Your ID" />
-                            </Form.Group>
-
                             <Form.Group as={Col} controlId="formGridQid">
                                 <Form.Label>Question ID</Form.Label>
                                 <Form.Control required autoComplete="off"
@@ -71,8 +68,6 @@ export default class CastYourVote extends Component{
                                               className="bg-dark text-white"
                                               placeholder="Enter Question ID" />
                             </Form.Group>
-                        </Form.Row>
-
                         <fieldset>
                             <Form.Group as={Row} controlId="formGridAnswer">
                                 <Form.Label as="legend" column sm={2}>

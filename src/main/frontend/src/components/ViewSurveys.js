@@ -22,15 +22,12 @@ export default class ViewSurveys extends Component{
         if (!window.confirm("Are you sure?")) {
             return;
         }
-
         event.preventDefault();
-
 
         const url = getApiUrl(`/questions/deleteQuestionById/${question.qid}`);
 
         console.log(question);
         console.log('question id', question.qid);
-
 
         axios.delete(url)
             .then(response => {

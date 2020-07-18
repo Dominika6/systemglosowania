@@ -4,6 +4,7 @@ import {Card, Form, Button, Col} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import {getCurrentUserId} from "./Login";
 
 export default class NewPassword extends Component{
 
@@ -15,12 +16,27 @@ export default class NewPassword extends Component{
     }
 
     initialState = {
-        userid:'', oldPassword:'', newPassword:''
+        userid:'', oldPassword:'', newPassword:'', confirmNewPassword:''
     }
 
     submitPassword = event => {
+        const userid = getCurrentUserId();
+
+        if(!userid) {
+            alert("niezalogowany");
+            return;
+        }
+
+        console.log("new1:" + this.state.newPassword);
+        console.log("new2:" + this.state.confirmNewPassword);
+
+        if(!(this.state.newPassword === this.state.confirmNewPassword)){
+            alert("podane hasła się różnią");
+            return;
+        }
+
         event.preventDefault()
-        axios.put("http://localhost:8080/api/user/updatePassword/" + this.state.userid + "/" + this.state.oldPassword + "/" + this.state.newPassword)
+        axios.put("http://localhost:8080/api/user/updatePassword/" + userid + "/" + this.state.oldPassword + "/" + this.state.newPassword)
             .then(response => {
                 if(response.data != null){
                     this.setState(this.initialState);
@@ -37,7 +53,7 @@ export default class NewPassword extends Component{
     }
 
     render(){
-        const {userid, oldPassword, newPassword} = this.state;
+        const { oldPassword, newPassword, confirmNewPassword} = this.state;
 
         return(
             <Card className={"border border-dark bg-dark text-white"}>
@@ -48,14 +64,6 @@ export default class NewPassword extends Component{
                 <div>
                     <br/>
                     <Form.Group as={Col} controlId="formGridNewPassword">
-                        <Form.Label>Your ID:</Form.Label>
-                        <Form.Control required name="userid" value={userid}
-                                      onChange={this.passwordChange} autoComplete="off"
-                                      className="bg-dark text-white"
-                                      placeholder="Enter Your Id"/>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formGridNewPassword">
-
                         <Form.Label>Old Password:</Form.Label>
                         <Form.Control required autoComplete="off"
                                       name="oldPassword" onChange={this.passwordChange}
@@ -63,14 +71,23 @@ export default class NewPassword extends Component{
                                       className="bg-dark text-white"
                                       placeholder="Enter old password" input type="password"/>
                     </Form.Group>
-                    <Form.Group as={Col} controlId="formGridNewPassword">
 
+                    <Form.Group as={Col} controlId="formGridNewPassword">
                         <Form.Label>New Password:</Form.Label>
                         <Form.Control required autoComplete="off"
                                       name="newPassword" onChange={this.passwordChange}
                                       value={newPassword}
                                       className="bg-dark text-white"
                                       placeholder="Enter new password" input type="password" />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridNewPassword">
+                        <Form.Label>Confirm New Password:</Form.Label>
+                        <Form.Control required autoComplete="off"
+                                      name="ConfirmNewPassword" onChange={this.passwordChange}
+                                      value={confirmNewPassword}
+                                      className="bg-dark text-white"
+                                      placeholder="Confirm new password" input type="password" />
                     </Form.Group>
                 </div>
                 </Form>

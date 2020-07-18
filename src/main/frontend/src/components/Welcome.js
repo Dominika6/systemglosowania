@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import Card from "react-bootstrap/Card";
 
-// import {Button, Jumbotron} from "react-bootstrap";
 
 export default class Welcome extends Component{
 
