@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().and()
+//                .cors().and()
                 .authorizeRequests()
 //                    .antMatchers("/api/user/updateUserEmail/**", "/api/user/updateUserName/**", "/api/user/updatePassword/**",
 //                        "/api/questions/getAllQuestions", "/api/questions/getQuestionById",
@@ -32,41 +33,49 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                    .antMatchers("/api/user/**", "/api/questions/**", "/api/survey/getResultByQId/**").hasRole("ADMIN")
                     .antMatchers("api/**").permitAll()
                     .and()
-                .formLogin()
-                    .and()
-                .logout()
-                    .permitAll()
-                    .and()
+//                .formLogin()
+//                    .and()
+//                .logout()
+//                    .permitAll()
+//                    .and()
                 .httpBasic()
                     .and()
+//                .sessionManagement()
+//                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                    .and()
+                .logout()
+                    .deleteCookies("JSESSIONID")
+                ;
+
+        http
                 .csrf()
                     .disable();
 
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+//        return source;
+//    }
 
 
-    @Bean
-    public UserDetailsService userDetailsService(){
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("user@student.uj.edu.pl")
-                .password("user")
-                .roles("USER")
-                .build();
-
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin@student.uj.edu.pl")
-                .password("admin")
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService(){
+//        UserDetails user = User.withDefaultPasswordEncoder()
+//                .username("user@student.uj.edu.pl")
+//                .password("user")
+//                .roles("USER")
+//                .build();
+//
+//        UserDetails admin = User.withDefaultPasswordEncoder()
+//                .username("admin@student.uj.edu.pl")
+//                .password("admin")
+//                .roles("ADMIN")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user, admin);
+//    }
 
 }

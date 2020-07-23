@@ -6,6 +6,7 @@ import java.util.*;
 
 public class User
 {
+
     @Id
     @GeneratedValue
     private UUID userid;
@@ -43,6 +44,11 @@ public class User
         this.userid = userid;
         this.name = name;
         this.email = email;
+    }
+
+    public User(UUID userid){
+        this.userid = userid;
+
     }
 
     @Override

@@ -16,11 +16,19 @@ public class Survey {
     private UUID qid;
 
     private boolean answer;
+    private int tru;
+    private int fals;
+
 
     protected Survey(){}
 
     public Survey(boolean answer){
         this.answer = answer;
+    }
+
+    public Survey(int tru, int fals){
+        this.tru = tru;
+        this.fals = fals;
     }
 
     public Survey(UUID userid, UUID qid, boolean answer) {
@@ -45,4 +53,7 @@ public class Survey {
     public boolean getAnswer() {
         return answer;
     }
+
+    public int getTru(){return tru;}
+    public int getFals(){return fals;}
 }

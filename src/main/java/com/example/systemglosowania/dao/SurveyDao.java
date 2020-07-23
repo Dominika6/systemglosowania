@@ -1,5 +1,6 @@
 package com.example.systemglosowania.dao;
 
+import com.example.systemglosowania.model.Results;
 import com.example.systemglosowania.model.Survey;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public interface SurveyDao {
     List<Survey> getMyAnswers(UUID userid);
 
     List<Survey> getResultByQid(UUID qid);
+
+    List<Results> getTrueFalseByQid(UUID qid);
 
     List<Survey> ifAnswerExists (UUID userid, UUID qid);
 }

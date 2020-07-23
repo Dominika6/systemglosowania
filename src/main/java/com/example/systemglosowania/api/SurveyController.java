@@ -1,5 +1,6 @@
 package com.example.systemglosowania.api;
 
+import com.example.systemglosowania.model.Results;
 import com.example.systemglosowania.model.Survey;
 import com.example.systemglosowania.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +49,22 @@ public class SurveyController {
         return surveyService.getResultByQid(qid);
     }
 
+    @GetMapping("/getTrueFalseByQid/{qid}")
+    public List<Results> getTrueFalseByQid(@PathVariable("qid") UUID qid){
+        return surveyService.getTrueFalseByQid(qid);
+    }
+
     public boolean ifAnswerExists(UUID userid, UUID qid){
         List<Survey> lista = surveyService.ifAnswerExists(userid, qid);
         String answers = lista.toString();
         return answers.replace("[", "").replace("]", "").isEmpty();
+    }
+
+    @GetMapping("/ifAnswerExist/{userid}/{qid}")
+    public String ifAnswerExist(@PathVariable("userid") UUID userid,@PathVariable("qid") UUID qid){
+        String answer = surveyService.ifAnswerExists(userid, qid).toString();
+//        Boolean odp = answer.();
+        return answer.replace("[", "").replace("]", "");
     }
 }
 

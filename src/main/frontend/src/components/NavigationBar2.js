@@ -2,14 +2,12 @@ import React, {Component} from "react";
 
 import {Navbar} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-// import {getIsLoggedAsAdmin, getIsLoggedIn} from "./Login";
 
 export default class NavigationBar2 extends Component{
 
     render(){
 
-        // const isAdmin = getIsLoggedAsAdmin();
-        // const isLogged = getIsLoggedIn();
+        //Navbar dla niezalogowanego
 
         return(
             <Navbar bg="dark" variant="dark">

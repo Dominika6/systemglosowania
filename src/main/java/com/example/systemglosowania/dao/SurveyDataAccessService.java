@@ -1,11 +1,13 @@
 package com.example.systemglosowania.dao;
 
+import com.example.systemglosowania.model.Results;
 import com.example.systemglosowania.model.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +40,20 @@ public class SurveyDataAccessService implements SurveyDao {
     }
 
     @Override
+    public List<Results> getTrueFalseByQid(UUID qid) {
+        final String sql ="select answer, qid, count(answer) ile from survey where qid='"+ qid +"' group by answer, qid";
+        return jdbcTemplate.query(sql, mapResults());
+//        List list = new ArrayList(2);
+//        final String sqlT = "select answer, count(answer) ile from survey where qid='"+ qid +"' and answer='t' group by answer";
+//        List<Integer> item1 = jdbcTemplate.query(sqlT, mapTrueFromDb());
+//        final String sqlF = "select answer, count(answer) ile from survey where qid='"+ qid +"' and answer='f' group by answer";
+//        List<Integer> item2 = jdbcTemplate.query(sqlF, mapFalseFromDb());
+//        list.add(item1);
+//        list.add(item2);
+//        return list;
+    }
+
+    @Override
     public List<Survey> ifAnswerExists(UUID userid, UUID qid) {
         final String sql = "select answer from survey where userid = '" + userid + "'and qid= '" + qid + "'";
         return jdbcTemplate.query(sql, mapAnswerFromDb());
@@ -48,6 +64,37 @@ public class SurveyDataAccessService implements SurveyDao {
             boolean answers = resultSet.getBoolean("answer");
             return new Survey(answers);
         });
+    }
+
+//    private RowMapper<Integer> mapTrueFromDb(){
+//        return ((resultSet, i) -> {
+//            return resultSet.getInt("ile");
+//
+//        });
+//    }
+//    private RowMapper<Integer> mapFalseFromDb(){
+//        return ((resultSet, i) -> {
+//            return resultSet.getInt("ile");
+//        });
+//    }
+
+//    private RowMapper<Results> mapResultsFromDb(){
+//        return (((resultSet, i) -> {
+//            String qidString = resultSet.getString("qid");
+//            UUID qid = UUID.fromString(qidString);
+//            int tru = resultSet.getInt("tru");
+//            int fals = resultSet.getInt("fals");
+//
+//        }));
+//    }
+    private RowMapper<Results> mapResults(){
+        return (((resultSet, i) -> {
+            String qidString = resultSet.getString("qid");
+            UUID qid = UUID.fromString(qidString);
+            String answer = resultSet.getString("answer");
+            int ile = resultSet.getInt("ile");
+            return new Results(qid, answer, ile);
+        }));
     }
 
     private RowMapper<Survey> mapSurveyFromDb() {

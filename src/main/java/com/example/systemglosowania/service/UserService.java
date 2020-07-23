@@ -19,6 +19,10 @@ public class UserService {
         this.userDao = userDao;
     }
 
+    public List<UUID> ifEmailPasswordCorrect(String email, String password){
+        return userDao.ifEmailPasswordCorrect(email, password);
+    }
+
     public List<User> addUser(String email, String name, String password, String role) {
         return userDao.insertUser(email, name, password, role);
     }

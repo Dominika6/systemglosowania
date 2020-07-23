@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import {Button, Card, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faList} from "@fortawesome/free-solid-svg-icons";
+import {faList, faTrash} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
-import {getApiUrl} from "../utils/apiUrl";
+// import {getApiUrl} from "../utils/apiUrl";
 
 export default class ViewSurveys extends Component{
 
@@ -12,32 +12,50 @@ export default class ViewSurveys extends Component{
         this.state = {
             surveys : []
         };
+        this.nameChange = this.nameChange.bind(this);
+        this.deleteQuestion= this.deleteQuestion.bind(this);
     }
 
-    componentDidMount() {
-        this.findAllQuestions();
-    }
 
-    deleteQuestion(event, question) {
+    deleteQuestion = (event, questions) => {
         if (!window.confirm("Are you sure?")) {
             return;
         }
         event.preventDefault();
 
-        const url = getApiUrl(`/questions/deleteQuestionById/${question.qid}`);
+        this.setState({
+            [event.target.name]:event.target.value
+        });
 
-        console.log(question);
-        console.log('question id', question.qid);
+        // const url = getApiUrl(`/questions/deleteQuestionById/${questions.qid}`);
 
-        axios.delete(url)
+        console.log(questions);
+        console.log('question id', questions.qid);
+
+        // axios.delete(url)
+        axios.delete("http://localhost:8080/api/questions/deleteQuestionById/" + questions.qid)
             .then(response => {
-                if(response.data != null){
+                console.log("w axiosie")
 
+                if(response.data != null){
                     alert(response.data);
                     window.location.reload();
                 }
+                console.log("tu")
+
             });
     }
+    nameChange = event => {
+        this.setState({
+            [event.target.name]:event.target.value
+        });
+    }
+
+
+    componentDidMount() {
+        this.findAllQuestions();
+    }
+
 
     findAllQuestions(){
         axios.get("http://localhost:8080/api/questions/getAllQuestions")
@@ -52,26 +70,30 @@ export default class ViewSurveys extends Component{
             <Card className={"border border-dark bg-dark text-white"}>
                 <Card.Header><FontAwesomeIcon icon={faList}/> &nbsp; Questions: </Card.Header>
                 <Card.Body>
-                    <Table bordered hover stripped variant="dark">
+                    <Table bordered hover variant="dark">
                         <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Question</th>
-                            <th>Deadline</th>
-                            <th>Actions</th>
-                        </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>Question</th>
+                                <th>Deadline</th>
+                                <th>Actions</th>
+                            </tr>
                         </thead>
+
                         <tbody>
                         {this.state.surveys.length === 0 ?
                             <tr align="center">
                                 <td colSpan="6"> No Questions Available.</td>
                             </tr> :
-                            this.state.surveys.map((question) => (
-                                <tr key={question.qid}>
-                                    <td>{question.qid}</td>
-                                    <td>{question.question}</td>
-                                    <td>{question.deadline}</td>
-                                    <td><Button onClick={event => this.deleteQuestion(event, question)}>Delete</Button></td>
+                            this.state.surveys.map((questions) => (
+                                <tr key={questions.qid}>
+                                    <td>{questions.qid}</td>
+                                    <td>{questions.question}</td>
+                                    <td>{questions.deadline}</td>
+                                    <td><Button size="sm" variant="danger" type="submit" onClick={event => this.deleteQuestion(event, questions)}>
+                                            <FontAwesomeIcon icon={faTrash} />&nbsp; Delete
+                                        </Button>
+                                    </td>
                                 </tr>
                             ))
                         }

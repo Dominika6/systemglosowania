@@ -1,6 +1,7 @@
 package com.example.systemglosowania.service;
 
 import com.example.systemglosowania.dao.SurveyDao;
+import com.example.systemglosowania.model.Results;
 import com.example.systemglosowania.model.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,6 +30,10 @@ public class SurveyService {
 
     public List<Survey> getResultByQid(UUID qid){
         return surveyDao.getResultByQid(qid);
+    }
+
+    public List<Results> getTrueFalseByQid(UUID qid){
+        return surveyDao.getTrueFalseByQid(qid);
     }
 
     public List<Survey> ifAnswerExists (UUID userid, UUID qid){

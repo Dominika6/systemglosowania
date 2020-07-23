@@ -1,16 +1,18 @@
 import React, {Component} from "react";
 
 
-import AddAnswer from "./AddAnswer";
-import MyAnswers from "./MyAnswers";
+// import AddAnswer from "./AddAnswer";
+// import MyAnswers from "./MyAnswers";
+import TableOfAnswers from "./TableOfAnswers";
 
 export default class CastYourVote extends Component{
 
     render() {
         return(
             <div>
-                <AddAnswer/>
-                <MyAnswers/>
+                {/*<AddAnswer/>*/}
+                {/*<MyAnswers/>*/}
+                <TableOfAnswers/>
                 <br/>
             </div>
         );

@@ -17,10 +17,9 @@ export default class AdminGetAllUsers extends Component{
 
 
     deleteUser = (event, user) => {
-
         console.log(user.id);
 
-        event.preventDefault()
+        event.preventDefault();
         this.setState({
             [event.target.name]:event.target.value
         });
@@ -48,7 +47,6 @@ export default class AdminGetAllUsers extends Component{
 
     componentDidMount() {
         this.findAllUsers();
-
     }
 
     findAllUsers(){
@@ -88,8 +86,8 @@ export default class AdminGetAllUsers extends Component{
                                     <td>{user.role}</td>
                                     <td>
                                         <Button size="sm" variant="danger" type="submit" onClick={event => this.deleteUser(event, user)}>
-                                                <FontAwesomeIcon icon={faTrash} />&nbsp; Delete
-                                            </Button>
+                                            <FontAwesomeIcon icon={faTrash} />&nbsp; Delete
+                                        </Button>
                                     </td>
                                 </tr>
                             ))
@@ -102,3 +100,6 @@ export default class AdminGetAllUsers extends Component{
     };
 }
 
+
+// {/*</tr>*/}
+// ))}

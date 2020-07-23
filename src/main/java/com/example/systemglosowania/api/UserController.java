@@ -2,7 +2,7 @@ package com.example.systemglosowania.api;
 
 import com.example.systemglosowania.model.User;
 import com.example.systemglosowania.service.UserService;
-import org.json.JSONObject;
+//import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +19,14 @@ public class UserController {
     @Autowired
     public UserController(UserService userService){
         this.userService = userService;
+    }
+
+    @GetMapping("login/{email}/{password}")
+    public List<UUID> ifEmailPasswordCorrect(@PathVariable("email") String email,
+                                          @PathVariable("password") String password){
+
+        List<UUID> userid = userService.ifEmailPasswordCorrect(email, password);
+        return userid;
     }
 
     @PostMapping("/addUser/{email}/{name}/{password}/{role}")
@@ -69,7 +77,8 @@ public class UserController {
                                  @PathVariable("name") String nameToUpdate){
         UUID userid = UUID.fromString(userids);
         userService.updateUserName(userid, nameToUpdate);
-        return JSONObject.quote("Updated");
+        return "Updated. ";
+//        return JSONObject.quote("Updated");
     }
 
     @PutMapping("/updatePassword/{userid}/{oldPassword}/{newPassword}")
