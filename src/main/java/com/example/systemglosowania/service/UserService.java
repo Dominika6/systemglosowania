@@ -19,7 +19,7 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public List<UUID> ifEmailPasswordCorrect(String email, String password){
+    public User ifEmailPasswordCorrect(String email, String password){
         return userDao.ifEmailPasswordCorrect(email, password);
     }
 

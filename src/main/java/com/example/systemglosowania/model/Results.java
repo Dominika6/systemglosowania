@@ -16,8 +16,9 @@ public class Results {
     private UUID qid;
 
 //    private boolean answer;
-    private String answer;
-    private int ile;
+    private int tru;
+    private int fals;
+//    private int ile;
 
 
     protected Results(){}
@@ -26,19 +27,20 @@ public class Results {
 //        this.answer = answer;
 //    }
 
-    public Results(UUID qid,String answer, int ile){
-        this.qid = qid;
-        this.answer = answer;
-        this.ile = ile;
-    }
-
-//    public Results(UUID qid, int tru, int fals) {
-////        this.userid = userid;
+//    public Results(UUID qid, String tru, String fals, int ile){
+//        this.qid = qid;
 //        this.tru = tru;
 //        this.fals = fals;
-//        this.qid = qid;
-////        this.answer = answer;
+//        this.ile = ile;
 //    }
+
+    public Results(UUID qid, int tru, int fals) {
+//        this.userid = userid;
+        this.qid = qid;
+        this.tru = tru;
+        this.fals = fals;
+//        this.answer = answer;
+    }
 
 //    @Override
 //    public String toString() {
@@ -57,6 +59,6 @@ public class Results {
 //        return answer;
 //    }
 
-    public String getAnswer(){return answer;}
-    public int getIle(){return ile;}
+//    public String getAnswer(){return answer;}
+//    public int getIle(){return ile;}
 }

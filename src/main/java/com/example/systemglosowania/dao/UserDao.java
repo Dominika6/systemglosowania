@@ -7,8 +7,8 @@ import java.util.UUID;
 
 public interface UserDao {
 
-    List<UUID> ifEmailPasswordCorrect(String email, String password);
-
+    User ifEmailPasswordCorrect(String email, String password);
+//
     List<User> insertUser(String email, String name, String password, String role);
 
     List<User> selectAllUsers();

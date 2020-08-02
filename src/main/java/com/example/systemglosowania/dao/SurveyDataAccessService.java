@@ -1,5 +1,6 @@
 package com.example.systemglosowania.dao;
 
+import com.example.systemglosowania.model.Question;
 import com.example.systemglosowania.model.Results;
 import com.example.systemglosowania.model.Survey;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Repository("postgresSurvey")
 public class SurveyDataAccessService implements SurveyDao {
@@ -40,17 +39,45 @@ public class SurveyDataAccessService implements SurveyDao {
     }
 
     @Override
-    public List<Results> getTrueFalseByQid(UUID qid) {
-        final String sql ="select answer, qid, count(answer) ile from survey where qid='"+ qid +"' group by answer, qid";
-        return jdbcTemplate.query(sql, mapResults());
+    public List<Survey> getTrueFalseByQid(UUID qid) {
+//        final String sql ="select answer, qid, count(answer) ile from survey where qid='"+ qid +"' group by answer, qid";
+//        return jdbcTemplate.query(sql, mapResults());
 //        List list = new ArrayList(2);
-//        final String sqlT = "select answer, count(answer) ile from survey where qid='"+ qid +"' and answer='t' group by answer";
-//        List<Integer> item1 = jdbcTemplate.query(sqlT, mapTrueFromDb());
-//        final String sqlF = "select answer, count(answer) ile from survey where qid='"+ qid +"' and answer='f' group by answer";
-//        List<Integer> item2 = jdbcTemplate.query(sqlF, mapFalseFromDb());
-//        list.add(item1);
+        final String sqlT = "select count(*) tru from survey where qid='"+ qid +"' and answer='t'";
+        List<Integer> item1 = jdbcTemplate.query(sqlT, mapTrueFromDb());
+        final String sqlF = "select count(*) fals from survey where qid='"+ qid +"' and answer='f'";
+        List<Integer> item2 = jdbcTemplate.query(sqlF, mapFalseFromDb());
+//        final String sqlF = "select answer, count(answer) fals from survey where qid='"+ qid +"' and answer='f' group by answer";
+//        List<Results> item2 = jdbcTemplate.query(sqlF, mapResults());
+//        item1.addAll(item2);
 //        list.add(item2);
-//        return list;
+//        System.out.println("TUTAJ: " + item1.get(0) + item2.get(0));
+//        int tru = item1.get(0);
+//        int fals = item2.get(0);
+//        Results result = new Results(qid, tru, fals);     //TU SIĘ ZATRZYMAŁAM, COŚ NIE DZIAŁĄ
+//        List<Results> lista = new ArrayList<>(Collections.emptyList());
+//        lista.add(result);
+        Survey survey = new Survey(item1.get(0), item2.get(0));
+        List<Survey> list_of_survey = new ArrayList<Survey>(Collections.emptyList());
+        list_of_survey.add(survey);
+        return list_of_survey;
+    }
+
+    @Override
+    public List<Survey> getAllQuestionsWithAnswers(){
+//        wyciągamy z bazy wszystkie pytania
+        final String sqlQ = "select qid, question, deadline from questions";
+        List<Question> questions = jdbcTemplate.query(sqlQ, mapQuestionFromDb());
+//        dla każdego sprawdzamy w tab surveys wyniki
+        for (int i=0; i < questions.size(); i++){
+//            System.out.println("i: " + questions.get(i).qid);
+            final String sqlT = "select qid, count(*) tru from survey where qid='"+ questions.get(i).qid +"' and answer='t'";
+            List<Integer> item1 = jdbcTemplate.query(sqlT, mapTrueFromDb());
+            final String sqlF = "select count(*) fals from survey where qid='"+ questions.get(i).qid +"' and answer='f'";
+            List<Integer> item2 = jdbcTemplate.query(sqlF, mapFalseFromDb());
+        }
+        
+        return null;
     }
 
     @Override
@@ -66,17 +93,12 @@ public class SurveyDataAccessService implements SurveyDao {
         });
     }
 
-//    private RowMapper<Integer> mapTrueFromDb(){
-//        return ((resultSet, i) -> {
-//            return resultSet.getInt("ile");
-//
-//        });
-//    }
-//    private RowMapper<Integer> mapFalseFromDb(){
-//        return ((resultSet, i) -> {
-//            return resultSet.getInt("ile");
-//        });
-//    }
+    private RowMapper<Integer> mapTrueFromDb(){
+        return ((resultSet, i) -> resultSet.getInt("tru"));
+    }
+    private RowMapper<Integer> mapFalseFromDb(){
+        return ((resultSet, i) -> resultSet.getInt("fals"));
+    }
 
 //    private RowMapper<Results> mapResultsFromDb(){
 //        return (((resultSet, i) -> {
@@ -87,13 +109,28 @@ public class SurveyDataAccessService implements SurveyDao {
 //
 //        }));
 //    }
+
+
+    private RowMapper<Question> mapQuestionFromDb() {
+        return ((resultSet, i) -> {
+            String qidString = resultSet.getString("qid");
+            UUID qid = UUID.fromString(qidString);
+            String question = resultSet.getString("question");
+            Date deadline = resultSet.getDate("deadline");
+
+            return new Question( qid, question, deadline);
+        });
+    }
+    
+    
     private RowMapper<Results> mapResults(){
         return (((resultSet, i) -> {
             String qidString = resultSet.getString("qid");
             UUID qid = UUID.fromString(qidString);
-            String answer = resultSet.getString("answer");
-            int ile = resultSet.getInt("ile");
-            return new Results(qid, answer, ile);
+//            String answer = resultSet.getString("answer");
+            int tru = resultSet.getInt("tru");
+            int fals = resultSet.getInt("fals");
+            return new Results(qid, tru, fals);
         }));
     }
 

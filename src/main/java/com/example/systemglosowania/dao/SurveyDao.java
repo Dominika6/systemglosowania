@@ -14,7 +14,9 @@ public interface SurveyDao {
 
     List<Survey> getResultByQid(UUID qid);
 
-    List<Results> getTrueFalseByQid(UUID qid);
+    List<Survey> getTrueFalseByQid(UUID qid);
+
+    List<Survey> getAllQuestionsWithAnswers();
 
     List<Survey> ifAnswerExists (UUID userid, UUID qid);
 }

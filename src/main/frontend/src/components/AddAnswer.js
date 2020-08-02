@@ -56,20 +56,21 @@ export default class CastYourVote extends Component{
 
         return(
             <Card className={"border border-dark bg-dark text-white"}>
-                <Card.Header><FontAwesomeIcon icon={faPlusSquare} />&nbsp; Add Answer</Card.Header>
-
+                <Card.Header>
+                    <FontAwesomeIcon icon={faPlusSquare} />
+                    &nbsp; Add Answer
+                </Card.Header>
                 <Form onReset={this.resetAnswer} onSubmit={this.submitAnswer} id="answerFormId">
                     <Card.Body>
-                            <Form.Group as={Col} controlId="formGridQid">
-                                <Form.Label>Question ID</Form.Label>
-                                <Form.Control required autoComplete="off"
-                                              name="qid"
-                                              value={qid} onChange={this.answerChange}
-                                              className="bg-dark text-white"
-                                              placeholder="Enter Question ID" />
-                            </Form.Group>
+                        <Form.Group as={Col} controlId="formGridQid">
+                            <Form.Label>Question ID</Form.Label>
+                            <Form.Control required autoComplete="off"
+                                          name="qid"
+                                          value={qid} onChange={this.answerChange}
+                                          className="bg-dark text-white"
+                                          placeholder="Enter Question ID" />
+                        </Form.Group>
                         <fieldset>
-                            
                             <Form.Group as={Row} controlId="formGridAnswer">
                                 <Form.Label as="legend" column sm={2}>
                                     Your Answer :

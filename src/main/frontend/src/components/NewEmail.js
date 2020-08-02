@@ -53,7 +53,10 @@ export default class NewEmail extends Component{
             <Card className={"border border-dark bg-dark text-white"}>
                 <Form onReset={this.resetAnswer} onSubmit={this.submitEmail} id="emailFormId">
                     <Card.Header>
-                        <Form.Label> <FontAwesomeIcon icon={faEdit} /> &nbsp; Edit Email Address: </Form.Label></Card.Header>
+                        <Form.Label>
+                            <FontAwesomeIcon icon={faEdit} /> &nbsp; Edit Email Address:
+                        </Form.Label>
+                    </Card.Header>
                     <div>
                         <br/>
                         <Form.Group as={Col} controlId="formGridNewEmail">

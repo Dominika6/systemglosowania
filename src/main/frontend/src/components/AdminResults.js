@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 
-import {Button, Card, Col, Form, Table} from "react-bootstrap";
+import { Card,  Form, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAmericanSignLanguageInterpreting, faBars, faList} from "@fortawesome/free-solid-svg-icons";
+import { faList} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
-import {getCurrentUserId} from "./Login";
+// import {getCurrentUserId} from "./Login";
 
 
 export default class AdminSurveyResults extends Component{
@@ -44,7 +44,6 @@ export default class AdminSurveyResults extends Component{
 
     findAnswers(){
         // const userid = getCurrentUserId();
-        //
         // if (!userid){
         //     alert('');
         //     return;
@@ -79,15 +78,13 @@ export default class AdminSurveyResults extends Component{
     }
 
     render() {
-        const {qid} = this.state;
+        // const {qid} = this.state;
 
         return(
             <Card className={"border border-dark bg-dark text-white"}>
                 <Card.Header><FontAwesomeIcon icon={faList}/> &nbsp; Results</Card.Header>
-                <Form id="results" onReset={this.resetAnswer} onSubmit = {this.findMyAnswers}>
+                {/*<Form id="results" onSubmit = {this.findMyAnswers}>*/}
                     <Card.Body>
-
-                        <br/>
                         <Table bordered hover stripped variant="dark">
                             <thead>
                             <tr>
@@ -107,16 +104,15 @@ export default class AdminSurveyResults extends Component{
                                     <tr key={survey.id}>
                                         <td>{survey.question}</td>
                                         <td>{survey.deadline}</td>
+                                        <td>{survey.tru}</td>
 
                                     </tr>
                                 ))
                             }
-
-
                             </tbody>
                         </Table>
                     </Card.Body>
-                </Form>
+                {/*</Form>*/}
             </Card>
         );
     };

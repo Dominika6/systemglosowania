@@ -22,11 +22,10 @@ public class UserController {
     }
 
     @GetMapping("login/{email}/{password}")
-    public List<UUID> ifEmailPasswordCorrect(@PathVariable("email") String email,
+    public User ifEmailPasswordCorrect(@PathVariable("email") String email,
                                           @PathVariable("password") String password){
 
-        List<UUID> userid = userService.ifEmailPasswordCorrect(email, password);
-        return userid;
+        return userService.ifEmailPasswordCorrect(email, password);
     }
 
     @PostMapping("/addUser/{email}/{name}/{password}/{role}")
@@ -81,10 +80,15 @@ public class UserController {
 //        return JSONObject.quote("Updated");
     }
 
-    @PutMapping("/updatePassword/{userid}/{oldPassword}/{newPassword}")
+    @PutMapping("/updatePassword/{userid}/{oldPassword}/{newPassword}/{confirmNewPass}")
     public String updatePassword(@PathVariable("userid") UUID userid,
                                  @PathVariable("oldPassword") String oldPassword,
-                                 @PathVariable("newPassword") String newPassword){
+                                 @PathVariable("newPassword") String newPassword,
+                                 @PathVariable("confirmNewPass") String confirmNewPass){
+        if(!newPassword.equals(confirmNewPass)){
+            return "Password and confirmation are different";
+        }
+
         if(areThePasswordsTheSame(userid, oldPassword)){
             if(passwordValidation(newPassword)) {
                 userService.updatePassword(userid, newPassword);

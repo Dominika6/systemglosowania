@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.net.UnknownServiceException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,64 +21,88 @@ public class UserDataAccessService implements UserDao{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @Override
-    public List<UUID> ifEmailPasswordCorrect(String email, String password){
-//        UUID nullId = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
+
+  @Override
+    public User ifEmailPasswordCorrect(String email, String password){
 
         final String sql = "SELECT password FROM users WHERE email='" + email + "'";
         List<String> cryptPass = jdbcTemplate.query(sql, mapCryptPasswordFromDb());
 
-        List<UUID> listanull = List.of();
-//        listanull.add(nullId);
-
-        if(cryptPass.toString().length() == 0){
-            return listanull;
-        }
-
+        System.out.println("crypt: " + cryptPass);
         String formatPass = cryptPass.toString().replace("[", "").replace("]", "");
-        final String sql2 = "SELECT crypt ('" + password + "', '" + formatPass + "' ) AS password";
-        List<String> newCrypt = jdbcTemplate.query(sql2, mapCryptPasswordFromDb());
-        String isCorrect = newCrypt.toString().replace("[", "").replace("]", "");
+        if(!formatPass.equals("")) {
+            final String sql2 = "SELECT crypt ('" + password + "', '" + formatPass + "' ) AS password";
+            List<String> newCrypt = jdbcTemplate.query(sql2, mapCryptPasswordFromDb());
+            String isCorrect = newCrypt.toString().replace("[", "").replace("]", "");
 
-        if(formatPass.equals(isCorrect)){
-
-            final String sql3 = "SELECT userid FROM users WHERE email='" + email + "'";
-            List<User> uid= jdbcTemplate.query(sql3, mapUseridFromDb());
-            System.out.printf(uid.toString()+ "\n");
-            System.out.printf(email+ "\n");
-            System.out.printf(isCorrect+ "\n");
-            System.out.printf(listanull.toString());
-            System.out.printf(String.valueOf(cryptPass) + "\n");
-            System.out.printf(String.valueOf(newCrypt)+ "\n");
-//            UUID userid = UUID.fromString() ;
-
-//            List<UUID> useridList = List.of(UUID )
-            
-            return uid;
-        }
-        return listanull;
+            if (formatPass.equals(isCorrect)) { //czyli poprawne dane logowania
+                System.out.println("Poprawne dane");
+                final String sql3 = "SELECT userid, name, email, role FROM users WHERE email='" + email + "'";
+                List<User> lista =  jdbcTemplate.query(sql3, mapUserWithRoleFromDb());
+                List<User> pierwszyUser = new java.util.ArrayList<>(List.of());
+                pierwszyUser.add(lista.get(0));
+                return pierwszyUser.get(0);
+            } else {
+                return null;
+            }
+        }else
+            return null;
 
     }
 
+//
+//
+//  @Override
+//    public List<UUID> ifEmailPasswordCorrect(String email, String password){
+//
+//        final String sql = "SELECT password FROM users WHERE email='" + email + "'";
+//        List<String> cryptPass = jdbcTemplate.query(sql, mapCryptPasswordFromDb());
+//
+//        List<UUID> listanull = List.of();
+//
+//        String pustyjakzlymail = cryptPass.toString().replace("[", "").replace("]", "");
+//
+//
+//        if(cryptPass.toString().length() == 0){
+//            return listanull;
+//        }
+//        if(pustyjakzlymail.length() == 0){
+//            return listanull;
+//        }
+//
+//        String formatPass = cryptPass.toString().replace("[", "").replace("]", "");
+//        final String sql2 = "SELECT crypt ('" + password + "', '" + formatPass + "' ) AS password";
+//        List<String> newCrypt = jdbcTemplate.query(sql2, mapCryptPasswordFromDb());
+//        String isCorrect = newCrypt.toString().replace("[", "").replace("]", "");
+//
+//        if(formatPass.equals(isCorrect)){
+//            final String sql3 = "SELECT userid FROM users WHERE email='" + email + "'";
+//            return jdbcTemplate.query(sql3, mapUseridFromDb());
+//        }
+//        return listanull;
+//
+//    }
+//
 
     @Override
     public List<User> insertUser(String email, String name, String password, String role) {
         final String sql = "INSERT INTO users (name, email, password, role) " +
                 "VALUES ( '" + name + "', '" + email + "', crypt( '" + password + "', gen_salt('md5'))," +
                 " '" + role + "') RETURNING userid, name, email, role";
-        return jdbcTemplate.query(sql, mapUserWithRoleFomDb());
+        return jdbcTemplate.query(sql, mapUserWithRoleFromDb());
     }
 
     @Override
     public List<User> selectAllUsers() {
         final String sql = "SELECT userid, name, email, role FROM users";
-        return jdbcTemplate.query(sql, mapUserWithRoleFomDb());
+        return jdbcTemplate.query(sql, mapUserWithRoleFromDb());
     }
 
     @Override
     public List<User> selectUserById(UUID userid) {
         final String sql = "SELECT userid, name, email, role FROM users WHERE userid='" + userid + "'";
-        return jdbcTemplate.query(sql, mapUserWithRoleFomDb());
+        return jdbcTemplate.query(sql, mapUserWithRoleFromDb());
     }
 
     @Override
@@ -86,28 +110,28 @@ public class UserDataAccessService implements UserDao{
         final String sql1 = "DELETE FROM survey WHERE userid = '" + userid + "' RETURNING userid, qid, answer";
         jdbcTemplate. query(sql1, mapSurveyFromDb());
         final String sql2 = "DELETE FROM users WHERE userid='" + userid + "' RETURNING userid, name, email";
-        return jdbcTemplate.query(sql2, mapUserFomDb());
+        return jdbcTemplate.query(sql2, mapUserFromDb());
     }
 
     @Override
     public List<User> updateUserEmail(UUID userid, String email) {
         final String sql = "UPDATE users SET email = '" + email + "' WHERE userid = '" + userid + "' " +
                 "RETURNING userid, name, email";
-        return jdbcTemplate.query(sql, mapUserFomDb());
+        return jdbcTemplate.query(sql, mapUserFromDb());
     }
 
     @Override
     public List<User> updateUserName(UUID userid, String name) {
         final String sql = "UPDATE users SET name = '" + name + "' WHERE userid = '" + userid + "' " +
                 "RETURNING userid, name, email";
-        return jdbcTemplate.query(sql, mapUserFomDb());
+        return jdbcTemplate.query(sql, mapUserFromDb());
     }
 
     @Override
     public List<User> updatePassword(UUID userid, String password){
         final String sql = "UPDATE users SET password = crypt( '" + password + "', gen_salt('md5')) " +
                 "WHERE userid = '" + userid + "' RETURNING userid, name, email";
-        return jdbcTemplate.query(sql, mapUserFomDb());
+        return jdbcTemplate.query(sql, mapUserFromDb());
     }
 
     @Override
@@ -126,17 +150,15 @@ public class UserDataAccessService implements UserDao{
     private RowMapper<String> mapCryptPasswordFromDb(){
         return (resultSet, i) -> resultSet.getString("password");
     }
+//
+//    private RowMapper<UUID> mapUseridFromDb(){
+//        return (resultSet, i) -> {
+//            String useridString = resultSet.getString("userid");
+//            return UUID.fromString(useridString);
+//        };
+//    }
 
-    private RowMapper<User> mapUseridFromDb(){
-        return (resultSet, i) -> {
-            String useridString = resultSet.getString("userid");
-            UUID userid = UUID.fromString(useridString);
-//            List<UU>
-            return new User(userid);
-        };
-    }
-
-    private RowMapper<User> mapUserFomDb() {
+    private RowMapper<User> mapUserFromDb() {
         return (resultSet, i) -> {
             String useridString = resultSet.getString("userid");
             UUID userid = UUID.fromString(useridString);
@@ -146,7 +168,7 @@ public class UserDataAccessService implements UserDao{
             return new User(userid, name, email);
         };
     }
-    private RowMapper<User> mapUserWithRoleFomDb() {
+    private RowMapper<User> mapUserWithRoleFromDb() {
         return (resultSet, i) -> {
             String useridString = resultSet.getString("userid");
             UUID userid = UUID.fromString(useridString);

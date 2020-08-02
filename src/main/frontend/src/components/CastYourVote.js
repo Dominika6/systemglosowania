@@ -4,6 +4,7 @@ import React, {Component} from "react";
 // import AddAnswer from "./AddAnswer";
 // import MyAnswers from "./MyAnswers";
 import TableOfAnswers from "./TableOfAnswers";
+import Answers from "./Answers";
 
 export default class CastYourVote extends Component{
 
@@ -12,7 +13,8 @@ export default class CastYourVote extends Component{
             <div>
                 {/*<AddAnswer/>*/}
                 {/*<MyAnswers/>*/}
-                <TableOfAnswers/>
+                {/*<TableOfAnswers/>*/}
+                <Answers/>
                 <br/>
             </div>
         );

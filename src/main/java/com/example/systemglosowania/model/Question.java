@@ -10,7 +10,7 @@ public class Question {
 
     @Id
     @GeneratedValue
-    private UUID qid;
+    public UUID qid;
 
     @NotNull
     private String question;
