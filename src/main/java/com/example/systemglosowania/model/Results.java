@@ -1,64 +1,34 @@
 package com.example.systemglosowania.model;
 
-import com.sun.istack.NotNull;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.Id;
+import java.util.Date;
 import java.util.UUID;
-
+@AllArgsConstructor
+@JsonSerialize
+@Getter
+@Setter
 public class Results {
 
-//    @Id
-//    @NotNull
-//    private UUID userid;
-
-    @Id
-    @NotNull
     private UUID qid;
-
-//    private boolean answer;
     private int tru;
     private int fals;
-//    private int ile;
+    private String question;
+    private Date deadline;
 
 
-    protected Results(){}
+    public Results(){}
 
-//    public Results(boolean answer){
-//        this.answer = answer;
-//    }
-
-//    public Results(UUID qid, String tru, String fals, int ile){
-//        this.qid = qid;
-//        this.tru = tru;
-//        this.fals = fals;
-//        this.ile = ile;
-//    }
-
-    public Results(UUID qid, int tru, int fals) {
-//        this.userid = userid;
+    public Results(UUID qid, String question, Date deadline, int tru, int fals){
         this.qid = qid;
+        this.question = question;
+        this.deadline = deadline;
         this.tru = tru;
         this.fals = fals;
-//        this.answer = answer;
+
     }
 
-//    @Override
-//    public String toString() {
-//        return "" + answer + "";
-//    }
-//
-//    public UUID getUserid() {
-//        return userid;
-//    }
-//
-    public UUID getQid() {
-        return qid;
-    }
-//
-//    public boolean getAnswer() {
-//        return answer;
-//    }
-
-//    public String getAnswer(){return answer;}
-//    public int getIle(){return ile;}
 }

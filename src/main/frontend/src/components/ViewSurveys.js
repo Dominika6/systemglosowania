@@ -3,7 +3,6 @@ import {Button, Card, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faList, faTrash} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
-// import {getApiUrl} from "../utils/apiUrl";
 
 export default class ViewSurveys extends Component{
 
@@ -27,22 +26,12 @@ export default class ViewSurveys extends Component{
             [event.target.name]:event.target.value
         });
 
-        // const url = getApiUrl(`/questions/deleteQuestionById/${questions.qid}`);
-
-        console.log(questions);
-        console.log('question id', questions.qid);
-
-        // axios.delete(url)
         axios.delete("http://localhost:8080/api/questions/deleteQuestionById/" + questions.qid)
             .then(response => {
-                console.log("w axiosie")
-
                 if(response.data != null){
                     alert(response.data);
                     window.location.reload();
                 }
-                console.log("tu")
-
             });
     }
     nameChange = event => {
@@ -51,11 +40,9 @@ export default class ViewSurveys extends Component{
         });
     }
 
-
     componentDidMount() {
         this.findAllQuestions();
     }
-
 
     findAllQuestions(){
         axios.get("http://localhost:8080/api/questions/getAllQuestions")
@@ -73,7 +60,6 @@ export default class ViewSurveys extends Component{
                     <Table bordered hover variant="dark">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Question</th>
                                 <th>Deadline</th>
                                 <th>Actions</th>
@@ -87,7 +73,6 @@ export default class ViewSurveys extends Component{
                             </tr> :
                             this.state.surveys.map((questions) => (
                                 <tr key={questions.qid}>
-                                    <td>{questions.qid}</td>
                                     <td>{questions.question}</td>
                                     <td>{questions.deadline}</td>
                                     <td><Button size="sm" variant="danger" type="submit" onClick={event => this.deleteQuestion(event, questions)}>

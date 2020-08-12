@@ -2,7 +2,6 @@ package com.example.systemglosowania.api;
 
 import com.example.systemglosowania.model.User;
 import com.example.systemglosowania.service.UserService;
-//import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,7 +76,6 @@ public class UserController {
         UUID userid = UUID.fromString(userids);
         userService.updateUserName(userid, nameToUpdate);
         return "Updated. ";
-//        return JSONObject.quote("Updated");
     }
 
     @PutMapping("/updatePassword/{userid}/{oldPassword}/{newPassword}/{confirmNewPass}")

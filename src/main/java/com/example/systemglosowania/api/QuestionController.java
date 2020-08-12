@@ -35,6 +35,11 @@ public class QuestionController {
     }
 
 
+    @GetMapping("/getResultsSurv")
+    public List<Question> getResults(){
+        return questionService.getResults();
+    }
+
 
     @GetMapping("/getQuestionById/{qid}")
     public Object getQuestionById(@PathVariable("qid") UUID qid){

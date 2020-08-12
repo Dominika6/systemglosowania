@@ -8,16 +8,15 @@ import NavigationBar from "./components/NavigationBar";
 import Welcome from "./components/Welcome";
 import Footer from "./components/Footer";
 import EditAccount from "./components/EditAccount";
-import CastYourVote from "./components/CastYourVote";
 import AdminManageUserAccounts from "./components/AdminManageUserAccounts";
 import AdminManageSurveys from "./components/AdminManageSurveys";
-// import AdminSurveyResults from "./components/AdminSurveyResults"; // old verison
 import Switch from "react-bootstrap/cjs/Switch";
 import AdminAccount from "./components/AdminAccount";
 import Login, {getIsLoggedAsAdmin, getIsLoggedIn, getIsLoggedAsUser} from "./components/Login";
 import NavigationBar2 from "./components/NavigationBar2";
 import WelcomeAdmin from "./components/WelcomeAdmin";
 import AdminResults from "./components/AdminResults";
+import Answers from "./components/Answers";
 
 export default function App() {
 
@@ -26,13 +25,8 @@ export default function App() {
     };
 
     const isLoggedIn= getIsLoggedIn();
-
     const isAdmin = getIsLoggedAsAdmin();
-
     const isUser= getIsLoggedAsUser();
-
-
-
 
     return (
         <Router>
@@ -47,7 +41,7 @@ export default function App() {
                             {isLoggedIn && isUser && <>
                                 <Route path="/" exact component={Welcome}/>
                                 <Route path="/editAccount" exact component={EditAccount}/>
-                                <Route path="/castYourVote" exact component={CastYourVote}/>
+                                <Route path="/castYourVote" exact component={Answers}/>
                             </>}
 
                             {isLoggedIn && isAdmin && <>
@@ -57,9 +51,7 @@ export default function App() {
                                 <Route path="/admin/manageUserAccounts" exact component={AdminManageUserAccounts}/>
                                 <Route path="/admin/manageSurveys" exact component={AdminManageSurveys}/>
                                 <Route path="/admin/surveyResults" exact component={AdminResults}/>
-                                {/*<Route path="/admin/surveyResults" exact component={AdminSurveyResults}/> // old version */}
                             </>}
-
                         </Switch>
                     </Col>
                 </Row>

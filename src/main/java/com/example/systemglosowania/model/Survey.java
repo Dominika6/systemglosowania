@@ -4,7 +4,6 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 public class Survey {
@@ -23,8 +22,6 @@ public class Survey {
     private Date deadline;
     private String question;
 
-    protected Survey(List<Integer> item1, List<Integer> item2){}
-
     public Survey(boolean answer){
         this.answer = answer;
     }
@@ -37,11 +34,11 @@ public class Survey {
         this.fals = fals;
     }
 
- public Survey(int tru, int fals){
-        this.tru = tru;
-        this.fals = fals;
-    }
+    public  Survey(UUID qid,String question){
+        this.qid = qid;
+        this.question = question;
 
+    }
     public Survey(UUID userid, UUID qid, boolean answer) {
         this.userid = userid;
         this.qid = qid;

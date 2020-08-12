@@ -32,12 +32,12 @@ public class SurveyService {
         return surveyDao.getResultByQid(qid);
     }
 
-    public List<Survey> getTrueFalseByQid(UUID qid){
-        return surveyDao.getTrueFalseByQid(qid);
+    public List<Survey> getResults(){
+        return surveyDao.getResults();
     }
 
-    public List<Survey> getAllQuestionsWithAnswers(){
-        return surveyDao.getAllQuestionsWithAnswers();
+    public List<Results> getResult(){
+        return surveyDao.getResult();
     }
 
     public List<Survey> ifAnswerExists (UUID userid, UUID qid){

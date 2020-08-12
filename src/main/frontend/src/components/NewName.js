@@ -2,7 +2,7 @@ import React, {Component} from "react";
 
 import {Card, Form, Button, Col} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faSave} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import {getCurrentUserId} from "./Login";
 import {getApiUrl} from "../utils/apiUrl";
@@ -46,11 +46,11 @@ export default class NewName extends Component{
     }
 
     render(){
-        const { name} = this.state;
+        const {name} = this.state;
 
         return(
             <Card className={"border border-dark bg-dark text-white"}>
-                <Form onReset={this.resetAnswer} onSubmit={this.submitName} id="nameFormId">
+                <Form onSubmit={this.submitName} id="nameFormId">
                     <Card.Header>
                     <Form.Label><FontAwesomeIcon icon={faEdit} /> &nbsp; Edit Your Name: </Form.Label></Card.Header>
                     <div>
@@ -68,9 +68,6 @@ export default class NewName extends Component{
                     <Card.Footer style={{"textAlign":"right"}}>
                         <Button size="sm" variant="success" type="submit">
                             <FontAwesomeIcon icon={faSave} />&nbsp; Submit
-                        </Button> {' '}
-                        <Button  size="sm" variant="info" type="reset">
-                            <FontAwesomeIcon icon={faUndo} />&nbsp; Reset
                         </Button>
                     </Card.Footer>
                 </Form>

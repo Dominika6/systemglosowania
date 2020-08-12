@@ -28,6 +28,15 @@ public class QuestionDataAccessService implements QuestionDao {
     }
 
     @Override
+    public List<Question> getResults() {
+        final String sqlR = "select qid as qid, question as question, deadline as deadline, count(answer) filter ( where answer='t') as tru, " +
+                "count(answer) filter ( where answer='f') as fals from questions natural join survey group by qid order by deadline";
+
+        return jdbcTemplate.query(sqlR, mapResults());
+    }
+
+
+    @Override
     public List<Question> insertQuestion(String question, Date deadline){
         final String sql = "INSERT INTO questions (question , deadline) VALUES ('"+ question + "','" + deadline + "') RETURNING qid, question, deadline";
         return jdbcTemplate.query(sql, mapQuestionFromDb());
@@ -70,6 +79,18 @@ public class QuestionDataAccessService implements QuestionDao {
 
             return new Survey(userid, qid, answer);
         });
+    }
+
+    private RowMapper<Question> mapResults() {
+        return (((resultSet, i) -> {
+            String qidString = resultSet.getString("qid");
+            UUID qid = UUID.fromString(qidString);
+            String question = resultSet.getString("question");
+            Date deadline = resultSet.getDate("deadline");
+            int tru = resultSet.getInt("tru");
+            int fals = resultSet.getInt("fals");
+            return new Question(qid, question, deadline, tru, fals);
+        }));
     }
 
 }

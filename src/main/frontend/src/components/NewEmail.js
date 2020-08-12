@@ -2,7 +2,7 @@ import React, {Component} from "react";
 
 import {Card, Form, Button, Col} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faSave} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import {getCurrentUserId} from "./Login";
 
@@ -45,13 +45,12 @@ export default class NewEmail extends Component{
         });
     }
 
-
     render(){
         const { email} = this.state;
 
         return(
             <Card className={"border border-dark bg-dark text-white"}>
-                <Form onReset={this.resetAnswer} onSubmit={this.submitEmail} id="emailFormId">
+                <Form onSubmit={this.submitEmail} id="emailFormId">
                     <Card.Header>
                         <Form.Label>
                             <FontAwesomeIcon icon={faEdit} /> &nbsp; Edit Email Address:
@@ -72,9 +71,6 @@ export default class NewEmail extends Component{
                     <Card.Footer style={{"textAlign":"right"}}>
                         <Button size="sm" variant="success" type="submit">
                             <FontAwesomeIcon icon={faSave} /> &nbsp;Submit
-                        </Button> {' '}
-                        <Button  size="sm" variant="info" type="reset">
-                            <FontAwesomeIcon icon={faUndo} />&nbsp; Reset
                         </Button>
                     </Card.Footer>
                 </Form>

@@ -8,6 +8,8 @@ import java.util.UUID;
 
 public class Question {
 
+    private int fals;
+    private int tru;
     @Id
     @GeneratedValue
     public UUID qid;
@@ -19,6 +21,14 @@ public class Question {
     private Date deadline;
 
     protected Question(){}
+
+    public Question(UUID qid, String question, Date deadline, int tru, int fals){
+        this.qid = qid;
+        this.question = question;
+        this.deadline = deadline;
+        this.tru = tru;
+        this.fals = fals;
+    }
 
     public Question( UUID qid, String question, Date deadline){
         this.qid = qid;

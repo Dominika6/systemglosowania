@@ -1,10 +1,9 @@
 import React, {Component} from "react";
 
-import { Card,  Form, Table} from "react-bootstrap";
+import { Card, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faList} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
-// import {getCurrentUserId} from "./Login";
 
 
 export default class AdminSurveyResults extends Component{
@@ -13,63 +12,19 @@ export default class AdminSurveyResults extends Component{
         super(props);
         this.state = { surveys:[], answers:[]} ;
         this.idChange= this.idChange.bind(this);
-        this.findAnswers= this.findAnswers.bind(this);
-        // this.findMyAnswers= this.findMyAnswers.bind(this);
     }
 
     componentDidMount() {
         this.findAllQuestions();
-        // this.findAnswers();
     }
 
     findAllQuestions(){
-        axios.get("http://localhost:8080/api/questions/getAllQuestions")
+        axios.get("http://localhost:8080/api/survey/getResult")
             .then(response => response.data)
             .then((data) => {
                 this.setState({surveys : data});
             });
     }
-
-    // getResults(){
-    //     {this.state.answers.map((answer) => (
-    //         <tr key={answer.qid}>
-    //             <td>{answer.answer}</td>
-    //             <td>{answer.ile}</td>
-    //         </tr>
-    //     ))
-    //
-    //     }
-    // }
-
-
-    findAnswers(){
-        // const userid = getCurrentUserId();
-        // if (!userid){
-        //     alert('');
-        //     return;
-        // }
-        // event.preventDefault()
-        axios.get("http://localhost:8080/api/survey/getTrueFalseByQid/" + this.state.qid)
-            .then(response => response.data)
-            .then((data) => {
-                this.setState({surveys : data});
-                alert(data);
-            });
-    }
-     // findMyAnswers = event =>{
-    //     const userid = getCurrentUserId();
-    //
-    //     if (!userid){
-    //         alert('');
-    //         return;
-    //     }
-    //     event.preventDefault()
-    //     axios.get("http://localhost:8080/api/survey/getMyAnswers/" + userid)
-    //         .then(response => response.data)
-    //         .then((data) => {
-    //             this.setState({answers : data});
-    //         });
-    // }
 
     idChange = event => {
         this.setState({
@@ -78,12 +33,10 @@ export default class AdminSurveyResults extends Component{
     }
 
     render() {
-        // const {qid} = this.state;
 
         return(
             <Card className={"border border-dark bg-dark text-white"}>
                 <Card.Header><FontAwesomeIcon icon={faList}/> &nbsp; Results</Card.Header>
-                {/*<Form id="results" onSubmit = {this.findMyAnswers}>*/}
                     <Card.Body>
                         <Table bordered hover stripped variant="dark">
                             <thead>
@@ -100,19 +53,24 @@ export default class AdminSurveyResults extends Component{
                                 <tr align="center">
                                     <td colSpan="6"> No Surveys Available.</td>
                                 </tr> :
-                                this.state.surveys.map((survey) => (
-                                    <tr key={survey.id}>
+
+                                this.state.surveys.map((survey) => {
+                                    const total = survey.tru + survey.fals
+                                    const percentageTru = (survey.tru/total*100).toFixed(2)
+                                    const percentageFals = (survey.fals/total*100).toFixed(2)
+                                    return <tr key={survey.id}>
                                         <td>{survey.question}</td>
                                         <td>{survey.deadline}</td>
-                                        <td>{survey.tru}</td>
-
+                                        <td>{percentageTru} %</td>
+                                        <td>{percentageFals} %</td>
+                                        <td align={"center"}>{total}</td>
                                     </tr>
-                                ))
+                                    }
+                                )
                             }
                             </tbody>
                         </Table>
                     </Card.Body>
-                {/*</Form>*/}
             </Card>
         );
     };

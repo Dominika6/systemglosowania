@@ -36,4 +36,9 @@ public class QuestionService {
         return questionDao.deleteQuestionById(qid);
     }
 
+    public List<Question> getResults(){
+        return questionDao.getResults();
+    }
+
+
 }

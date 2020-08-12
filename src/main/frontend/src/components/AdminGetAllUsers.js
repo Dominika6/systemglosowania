@@ -17,25 +17,19 @@ export default class AdminGetAllUsers extends Component{
 
 
     deleteUser = (event, user) => {
-        console.log(user.id);
-
         event.preventDefault();
         this.setState({
             [event.target.name]:event.target.value
         });
-
-        if (!window.confirm("Jesteś pewny?")) {
+        if (!window.confirm("Are you sure?")) {
             return;
         }
-
         axios.delete("http://localhost:8080/api/user/deleteUserById/" + user.id)
             .then(response => {
-                console.log("w axiosie")
                 if(response.data != null){
                     alert(response.data);
                     window.location.reload();
                 }
-                console.log("tu")
             });
     }
 
@@ -65,7 +59,6 @@ export default class AdminGetAllUsers extends Component{
                     <Table bordered hover variant="dark">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
@@ -80,7 +73,6 @@ export default class AdminGetAllUsers extends Component{
                             </tr> :
                             this.state.users.map((user) => (
                                 <tr key={user.id}>
-                                    <td>{user.id}</td>
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>{user.role}</td>
@@ -99,7 +91,3 @@ export default class AdminGetAllUsers extends Component{
         );
     };
 }
-
-
-// {/*</tr>*/}
-// ))}

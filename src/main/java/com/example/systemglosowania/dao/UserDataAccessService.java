@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,40 +49,6 @@ public class UserDataAccessService implements UserDao{
             return null;
 
     }
-
-//
-//
-//  @Override
-//    public List<UUID> ifEmailPasswordCorrect(String email, String password){
-//
-//        final String sql = "SELECT password FROM users WHERE email='" + email + "'";
-//        List<String> cryptPass = jdbcTemplate.query(sql, mapCryptPasswordFromDb());
-//
-//        List<UUID> listanull = List.of();
-//
-//        String pustyjakzlymail = cryptPass.toString().replace("[", "").replace("]", "");
-//
-//
-//        if(cryptPass.toString().length() == 0){
-//            return listanull;
-//        }
-//        if(pustyjakzlymail.length() == 0){
-//            return listanull;
-//        }
-//
-//        String formatPass = cryptPass.toString().replace("[", "").replace("]", "");
-//        final String sql2 = "SELECT crypt ('" + password + "', '" + formatPass + "' ) AS password";
-//        List<String> newCrypt = jdbcTemplate.query(sql2, mapCryptPasswordFromDb());
-//        String isCorrect = newCrypt.toString().replace("[", "").replace("]", "");
-//
-//        if(formatPass.equals(isCorrect)){
-//            final String sql3 = "SELECT userid FROM users WHERE email='" + email + "'";
-//            return jdbcTemplate.query(sql3, mapUseridFromDb());
-//        }
-//        return listanull;
-//
-//    }
-//
 
     @Override
     public List<User> insertUser(String email, String name, String password, String role) {
@@ -150,13 +115,7 @@ public class UserDataAccessService implements UserDao{
     private RowMapper<String> mapCryptPasswordFromDb(){
         return (resultSet, i) -> resultSet.getString("password");
     }
-//
-//    private RowMapper<UUID> mapUseridFromDb(){
-//        return (resultSet, i) -> {
-//            String useridString = resultSet.getString("userid");
-//            return UUID.fromString(useridString);
-//        };
-//    }
+
 
     private RowMapper<User> mapUserFromDb() {
         return (resultSet, i) -> {

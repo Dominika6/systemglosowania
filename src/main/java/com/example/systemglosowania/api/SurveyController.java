@@ -1,6 +1,5 @@
 package com.example.systemglosowania.api;
 
-import com.example.systemglosowania.model.Question;
 import com.example.systemglosowania.model.Results;
 import com.example.systemglosowania.model.Survey;
 import com.example.systemglosowania.service.SurveyService;
@@ -39,9 +38,6 @@ public class SurveyController {
         }
     }
 
-//    @PostMapping("/tableOfAnswers/")
-//    TableOfAnswers()
-
     @GetMapping("/getMyAnswers/{userid}")
     public List<Survey> getMyAnswers(@PathVariable("userid") String userids){
         UUID userid = UUID.fromString(userids);
@@ -53,14 +49,16 @@ public class SurveyController {
         return surveyService.getResultByQid(qid);
     }
 
-    @GetMapping("/getTrueFalseByQid/{qid}")
-    public List<Survey> getTrueFalseByQid(@PathVariable("qid") UUID qid){
-        return surveyService.getTrueFalseByQid(qid);
+
+    @GetMapping("/getResultsSurv")
+    public List<Survey> getResults(){
+        return surveyService.getResults();
     }
 
-    @GetMapping("/getAllQuestionsWithAnswers")
-    public List<Survey> getAllQuestionsWithAnswers(){
-        return surveyService.getAllQuestionsWithAnswers();
+
+    @GetMapping("/getResult")
+    public List<Results> getResult(){
+        return surveyService.getResult();
     }
 
     public boolean ifAnswerExists(UUID userid, UUID qid){
@@ -73,13 +71,11 @@ public class SurveyController {
     public String ifAnswerExist(@PathVariable("userid") UUID userid,
                                 @PathVariable("qid") UUID qid){
         String answer = surveyService.ifAnswerExists(userid, qid).toString();
-//        Boolean odp = answer.();
         return answer.replace("[", "").replace("]", "");
     }
     @GetMapping("/ifExist/{userid}/{qid}")
     public Boolean ifExist(@PathVariable("userid") UUID userid,
                                 @PathVariable("qid") UUID qid){
-//        String answer = surveyService.ifAnswerExists(userid, qid).toString();
         return ifAnswerExists(userid, qid);
     }
 }

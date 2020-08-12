@@ -2,7 +2,7 @@ import React, {Component} from "react";
 
 import {Card, Form, Button, Col} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSave, faPlusSquare, faUndo} from "@fortawesome/free-solid-svg-icons";
+import {faSave, faPlusSquare} from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 
 export default class CastYourVote extends Component{
@@ -18,13 +18,8 @@ export default class CastYourVote extends Component{
         question:'', deadline:''
     }
 
-    resetAnswer = () => {
-        this.setState(() => this.initialState)
-    }
-
     submitQuestion = event => {
         event.preventDefault()
-        console.log( this.state.question +"/"+ this.state.deadline)
         axios.post("http://localhost:8080/api/questions/addQuestion/" + this.state.question + "/" + this.state.deadline )
             .then(response => {
                 this.setState(this.initialState);
@@ -46,7 +41,7 @@ export default class CastYourVote extends Component{
             <Card className={"border border-dark bg-dark text-white"}>
                 <Card.Header><FontAwesomeIcon icon={faPlusSquare} />&nbsp; Add Question</Card.Header>
 
-                <Form onReset={this.resetAnswer} onSubmit={this.submitQuestion} id="answerFormId">
+                <Form onSubmit={this.submitQuestion} id="answerFormId">
                     <Card.Body>
                         <Form.Group as={Col} controlId="formGridQuestion">
                             <Form.Label>The content of the question: </Form.Label>
@@ -70,9 +65,6 @@ export default class CastYourVote extends Component{
                     <Card.Footer style={{"textAlign":"right"}}>
                         <Button  size="sm" variant="success" type="submit">
                             <FontAwesomeIcon icon={faSave} /> &nbsp;Submit
-                        </Button> {' '}
-                        <Button  size="sm" variant="info" type="reset">
-                            <FontAwesomeIcon icon={faUndo} />&nbsp; Reset
                         </Button>
                     </Card.Footer>
                 </Form>
