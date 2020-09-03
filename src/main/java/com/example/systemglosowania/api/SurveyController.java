@@ -43,18 +43,6 @@ public class SurveyController {
         return surveyService.getMyAnswers(userid);
     }
 
-//    @GetMapping("/getResultByQId/{qid}")
-//    public List<Survey> getResultByQId(@PathVariable("qid") UUID qid){
-//        return surveyService.getResultByQid(qid);
-//    }
-
-
-//    @GetMapping("/getResultsSurv")
-//    public List<Survey> getResults(){
-//        return surveyService.getResults();
-//    }
-//
-
     @GetMapping("/getResult")
     public List<Results> getResult(){
         return surveyService.getResult();
@@ -65,18 +53,6 @@ public class SurveyController {
         String answers = lista.toString();
         return answers.replace("[", "").replace("]", "").isEmpty();
     }
-
-//    @GetMapping("/ifAnswerExist/{userid}/{qid}")
-//    public String ifAnswerExist(@PathVariable("userid") UUID userid,
-//                                @PathVariable("qid") UUID qid){
-//        String answer = surveyService.ifAnswerExists(userid, qid).toString();
-//        return answer.replace("[", "").replace("]", "");
-//    }
-//    @GetMapping("/ifExist/{userid}/{qid}")
-//    public Boolean ifExist(@PathVariable("userid") UUID userid,
-//                                @PathVariable("qid") UUID qid){
-//        return ifAnswerExists(userid, qid);
-//    }
 }
 
 

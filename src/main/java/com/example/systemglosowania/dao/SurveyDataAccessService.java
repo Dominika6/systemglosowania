@@ -38,27 +38,14 @@ public class SurveyDataAccessService implements SurveyDao {
         return jdbcTemplate.query(sql, mapSurveyFromDb());
     }
 
-
-// @Override
-//    public List<Survey> getResults() {
-//        final String sqlR = "select qid as qid, question as question, deadline as deadline, count(answer) filter ( where answer='t') as tru, " +
-//                "count(answer) filter ( where answer='f') as fals from questions natural join survey group by qid order by deadline";
-//
-//     return jdbcTemplate.query(sqlR, mapResults());
-//    }
-
-
- @Override
+    @Override
     public List<Results> getResult() {
-            List<Results> list;
-
-            final String sql = "select qid as qid, question as question, deadline as deadline, count(answer) filter ( where answer='t') as tru, " +
-                    "count(answer) filter ( where answer='f') as fals from questions natural join survey group by qid order by deadline";
-
-            list = jdbcTemplate.query(sql, mapResult());
-            return list;
+        List<Results> list;
+        final String sql = "select qid as qid, question as question, deadline as deadline, count(answer) filter ( where answer='t') as tru, " +
+                "count(answer) filter ( where answer='f') as fals from questions natural join survey group by qid order by deadline";
+        list = jdbcTemplate.query(sql, mapResult());
+        return list;
     }
-
 
     @Override
     public List<Survey> ifAnswerExists(UUID userid, UUID qid) {
@@ -71,21 +58,7 @@ public class SurveyDataAccessService implements SurveyDao {
             boolean answers = resultSet.getBoolean("answer");
             return new Survey(answers);
         });
-    }
-
-//
-//    private RowMapper<Survey> mapResults() {
-//        return (((resultSet, i) -> {
-//            String qidString = resultSet.getString("qid");
-//            UUID qid = UUID.fromString(qidString);
-//            String question = resultSet.getString("question");
-//            Date deadline = resultSet.getDate("deadline");
-//            int tru = resultSet.getInt("tru");
-//            int fals = resultSet.getInt("fals");
-//            return new Survey(qid, question, deadline, tru, fals);
-//        }));
-//    }
-
+}
 
     private RowMapper<Results> mapResult() {
         return (((resultSet, i) -> {

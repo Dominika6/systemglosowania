@@ -20,9 +20,7 @@ public class UserDataAccessService implements UserDao{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
-
-  @Override
+    @Override
     public User ifEmailPasswordCorrect(String email, String password){
 
         final String sql = "SELECT password FROM users WHERE email='" + email + "'";
@@ -47,7 +45,6 @@ public class UserDataAccessService implements UserDao{
             }
         }else
             return null;
-
     }
 
     @Override
@@ -116,7 +113,6 @@ public class UserDataAccessService implements UserDao{
         return (resultSet, i) -> resultSet.getString("password");
     }
 
-
     private RowMapper<User> mapUserFromDb() {
         return (resultSet, i) -> {
             String useridString = resultSet.getString("userid");
@@ -127,6 +123,7 @@ public class UserDataAccessService implements UserDao{
             return new User(userid, name, email);
         };
     }
+
     private RowMapper<User> mapUserWithRoleFromDb() {
         return (resultSet, i) -> {
             String useridString = resultSet.getString("userid");

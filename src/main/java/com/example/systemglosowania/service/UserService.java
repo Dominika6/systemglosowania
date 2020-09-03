@@ -46,11 +46,12 @@ public class UserService {
     public List<User> updateUserName(UUID userid, String newName) {
         return userDao.updateUserName(userid, newName);
     }
+
     public List<User> updatePassword(UUID userid, String newPassword){
         return userDao.updatePassword(userid, newPassword);
     }
+
     public boolean areThePasswordsTheSame(UUID userid, String isThePasswordCorrect){
         return userDao.areThePasswordsTheSame(userid, isThePasswordCorrect);
     }
-
 }

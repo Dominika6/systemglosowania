@@ -35,17 +35,6 @@ public class QuestionController {
     }
 
 
-//    @GetMapping("/getResultsSurv")
-//    public List<Question> getResults(){
-//        return questionService.getResults();
-//    }
-
-
-//    @GetMapping("/getQuestionById/{qid}")
-//    public Object getQuestionById(@PathVariable("qid") UUID qid){
-//        return questionService.getQuestionById(qid);
-//    }
-
     @DeleteMapping("/deleteQuestionById/{qid}")
     public String deleteQuestionById(@PathVariable("qid") UUID qid){
         questionService.deleteQuestionById(qid);

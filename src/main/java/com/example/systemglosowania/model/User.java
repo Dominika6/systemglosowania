@@ -4,8 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
-public class User
-{
+public class User{
 
     @Id
     @GeneratedValue

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.util.Date;
 import java.util.UUID;
+
 @AllArgsConstructor
 @JsonSerialize
 @Getter
@@ -19,7 +20,6 @@ public class Results {
     private String question;
     private Date deadline;
 
-
     public Results(){}
 
     public Results(UUID qid, String question, Date deadline, int tru, int fals){
@@ -28,7 +28,5 @@ public class Results {
         this.deadline = deadline;
         this.tru = tru;
         this.fals = fals;
-
     }
-
 }
