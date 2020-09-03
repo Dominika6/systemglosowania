@@ -68,16 +68,6 @@ export default class Answers extends Component{
        })
     }
 
-    // changeAnswerName = (ans) =>{
-    //     if (ans.toString() === "true"){
-    //         return "Yes"
-    //     }else if (ans.toString() === 'false'){
-    //         return "No"
-    //     }else{
-    //         return null
-    //     }
-    // }
-
     idChange = event => {
         this.setState({
             [event.target.name]:event.target.value
@@ -124,9 +114,7 @@ export default class Answers extends Component{
 
                             this.state.questions.map((questions) => {
                                 const matchingAnswer = this.findAnswerByQuestionId(questions.qid);
-                                // if(matchingAnswer !== undefined){
-                                //     const answ = this.changeAnswerName(matchingAnswer);
-                                // }
+
                                 return  <tr key={questions.qid}>
                                     <td>{questions.question}</td>
                                     <td>{questions.deadline}</td>

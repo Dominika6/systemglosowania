@@ -22,10 +22,6 @@ export default class ViewSurveys extends Component{
         }
         event.preventDefault();
 
-        // this.setState({
-        //     [event.target.name]:event.target.value
-        // });
-
         axios.delete("http://localhost:8080/api/questions/deleteQuestionById/" + questions.qid)
             .then(response => {
                 if(response.data != null){
