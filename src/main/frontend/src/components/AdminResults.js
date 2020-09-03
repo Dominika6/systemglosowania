@@ -75,7 +75,6 @@ export default class AdminSurveyResults extends Component{
             <br/>
             <br/>
             </>
-
         );
     };
 }

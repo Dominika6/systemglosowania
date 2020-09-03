@@ -8,7 +8,7 @@ export default class AdminManageUserAccounts extends Component{
 
     render() {
         return(
-        <div>
+            <div>
                 <AdminAddQuestion/>
                 <ViewSurveys/>
                 <br/>

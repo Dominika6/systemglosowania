@@ -82,7 +82,7 @@ export default class Answers extends Component{
     };
 
     whichAnswer(answer){
-        if(answer == "true"){
+        if(answer === "true"){
             return "Yes"
         }else{
             return "No"
@@ -123,7 +123,6 @@ export default class Answers extends Component{
                                             ?
                                             <div>
                                                 {this.whichAnswer(matchingAnswer.answer.toString())}
-                                                {/*{answ.toString()}*/}
                                             </div>
                                             :
                                             <div>

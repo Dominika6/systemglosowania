@@ -16,17 +16,16 @@ export default class UserData extends Component{
 
     componentDidMount() {
         this._isMounted = true;
-            const user = getCurrentUser1();
-            if (!user) {
-                alert('niezalogowany');
-                return;
-            }
-            axios.get("http://localhost:8080/api/user/getUserById/" + user.id)
-                .then(response => response.data)
-                .then((data) => {
-                    this.setState({users: data});
-
-                });
+        const user = getCurrentUser1();
+        if (!user) {
+            alert('niezalogowany');
+            return;
+        }
+        axios.get("http://localhost:8080/api/user/getUserById/" + user.id)
+            .then(response => response.data)
+            .then((data) => {
+                this.setState({users: data});
+            });
     }
 
     componentWillUnmount(){
