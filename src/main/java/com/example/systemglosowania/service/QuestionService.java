@@ -28,17 +28,17 @@ public class QuestionService {
         return questionDao.selectAllQuestions();
     }
 
-    public Object getQuestionById(UUID qid){
-        return questionDao.selectQuestionById(qid);
-    }
+//    public Object getQuestionById(UUID qid){
+//        return questionDao.selectQuestionById(qid);
+//    }
 
     public List<Question> deleteQuestionById(UUID qid){
         return questionDao.deleteQuestionById(qid);
     }
 
-    public List<Question> getResults(){
-        return questionDao.getResults();
-    }
+//    public List<Question> getResults(){
+//        return questionDao.getResults();
+//    }
 
 
 }

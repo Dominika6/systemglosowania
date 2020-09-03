@@ -34,7 +34,7 @@ export default class AdminSurveyResults extends Component{
 
     render() {
 
-        return(
+        return(<>
             <Card className={"border border-dark bg-dark text-white"}>
                 <Card.Header><FontAwesomeIcon icon={faList}/> &nbsp; Results</Card.Header>
                     <Card.Body>
@@ -61,8 +61,8 @@ export default class AdminSurveyResults extends Component{
                                     return <tr key={survey.id}>
                                         <td>{survey.question}</td>
                                         <td>{survey.deadline}</td>
-                                        <td>{percentageTru} %</td>
-                                        <td>{percentageFals} %</td>
+                                        <td>{percentageTru} %&nbsp;&nbsp;({survey.tru})</td>
+                                        <td>{percentageFals} %&nbsp;&nbsp;({survey.fals})</td>
                                         <td align={"center"}>{total}</td>
                                     </tr>
                                     }
@@ -72,6 +72,10 @@ export default class AdminSurveyResults extends Component{
                         </Table>
                     </Card.Body>
             </Card>
+            <br/>
+            <br/>
+            </>
+
         );
     };
 }

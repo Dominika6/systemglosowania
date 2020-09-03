@@ -32,9 +32,9 @@ public class SurveyService {
         return surveyDao.getResultByQid(qid);
     }
 
-    public List<Survey> getResults(){
-        return surveyDao.getResults();
-    }
+//    public List<Survey> getResults(){
+//        return surveyDao.getResults();
+//    }
 
     public List<Results> getResult(){
         return surveyDao.getResult();

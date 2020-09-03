@@ -21,8 +21,7 @@ public class SurveyController {
         this.surveyService = surveyService;
     }
 
-    @PostMapping("/addAnswer/{userid}/{qid}/{answer}") //tu nie jest dobrze jak mam answer - coś przekazane postem
-                                                        //obiekt przekazany postem -inna metoda zamiast PathVariable
+    @PostMapping("/addAnswer/{userid}/{qid}/{answer}")
     public String addAnswer(@PathVariable("userid") String userids,
                           @PathVariable("qid") String qids,
                           @PathVariable("answer") String answers) {
@@ -44,17 +43,17 @@ public class SurveyController {
         return surveyService.getMyAnswers(userid);
     }
 
-    @GetMapping("/getResultByQId/{qid}")
-    public List<Survey> getResultByQId(@PathVariable("qid") UUID qid){
-        return surveyService.getResultByQid(qid);
-    }
+//    @GetMapping("/getResultByQId/{qid}")
+//    public List<Survey> getResultByQId(@PathVariable("qid") UUID qid){
+//        return surveyService.getResultByQid(qid);
+//    }
 
 
-    @GetMapping("/getResultsSurv")
-    public List<Survey> getResults(){
-        return surveyService.getResults();
-    }
-
+//    @GetMapping("/getResultsSurv")
+//    public List<Survey> getResults(){
+//        return surveyService.getResults();
+//    }
+//
 
     @GetMapping("/getResult")
     public List<Results> getResult(){
@@ -67,17 +66,17 @@ public class SurveyController {
         return answers.replace("[", "").replace("]", "").isEmpty();
     }
 
-    @GetMapping("/ifAnswerExist/{userid}/{qid}")
-    public String ifAnswerExist(@PathVariable("userid") UUID userid,
-                                @PathVariable("qid") UUID qid){
-        String answer = surveyService.ifAnswerExists(userid, qid).toString();
-        return answer.replace("[", "").replace("]", "");
-    }
-    @GetMapping("/ifExist/{userid}/{qid}")
-    public Boolean ifExist(@PathVariable("userid") UUID userid,
-                                @PathVariable("qid") UUID qid){
-        return ifAnswerExists(userid, qid);
-    }
+//    @GetMapping("/ifAnswerExist/{userid}/{qid}")
+//    public String ifAnswerExist(@PathVariable("userid") UUID userid,
+//                                @PathVariable("qid") UUID qid){
+//        String answer = surveyService.ifAnswerExists(userid, qid).toString();
+//        return answer.replace("[", "").replace("]", "");
+//    }
+//    @GetMapping("/ifExist/{userid}/{qid}")
+//    public Boolean ifExist(@PathVariable("userid") UUID userid,
+//                                @PathVariable("qid") UUID qid){
+//        return ifAnswerExists(userid, qid);
+//    }
 }
 
 

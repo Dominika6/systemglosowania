@@ -93,6 +93,7 @@ export default class Answers extends Component{
 
     render() {
         return(
+            <>
             <Card className={"border border-dark bg-dark text-white"}>
                 <Card.Header>
                     <FontAwesomeIcon icon={faList}/> &nbsp;My Answers
@@ -130,6 +131,7 @@ export default class Answers extends Component{
                                             </div>
                                             :
                                             <div>
+                                                uy
                                                 <Form onSubmit={this.submitAnswer} id="answerFormId">
                                                     <Form.Group controlId="formGridEmail1" sm={10}>
                                                         <Col sm={10} className="ml-3">
@@ -164,6 +166,9 @@ export default class Answers extends Component{
                     </Table>
                 </Card.Body>
             </Card>
+            <br/>
+            <br/>
+            </>
         );
     };
 }

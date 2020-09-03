@@ -17,8 +17,8 @@ public class Survey {
     private UUID qid;
 
     private boolean answer;
-    private int tru;
-    private int fals;
+//    private int tru;
+//    private int fals;
     private Date deadline;
     private String question;
 
@@ -26,13 +26,13 @@ public class Survey {
         this.answer = answer;
     }
 
-    public Survey(UUID qid, String question, Date deadline, int tru, int fals){
-        this.qid = qid;
-        this.question = question;
-        this.deadline = deadline;
-        this.tru = tru;
-        this.fals = fals;
-    }
+//    public Survey(UUID qid, String question, Date deadline, int tru, int fals){
+//        this.qid = qid;
+//        this.question = question;
+//        this.deadline = deadline;
+//        this.tru = tru;
+//        this.fals = fals;
+//    }
 
     public  Survey(UUID qid,String question){
         this.qid = qid;
@@ -62,6 +62,6 @@ public class Survey {
         return answer;
     }
 
-    public int getTru(){return tru;}
-    public int getFals(){return fals;}
+//    public int getTru(){return tru;}
+//    public int getFals(){return fals;}
 }

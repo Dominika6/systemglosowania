@@ -14,7 +14,7 @@ public interface SurveyDao {
 
     List<Survey> getResultByQid(UUID qid);
 
-    List<Survey> getResults();
+//    List<Survey> getResults();
 
     List<Results> getResult();
 

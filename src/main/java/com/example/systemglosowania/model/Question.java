@@ -22,13 +22,13 @@ public class Question {
 
     protected Question(){}
 
-    public Question(UUID qid, String question, Date deadline, int tru, int fals){
-        this.qid = qid;
-        this.question = question;
-        this.deadline = deadline;
-        this.tru = tru;
-        this.fals = fals;
-    }
+//    public Question(UUID qid, String question, Date deadline, int tru, int fals){
+//        this.qid = qid;
+//        this.question = question;
+//        this.deadline = deadline;
+//        this.tru = tru;
+//        this.fals = fals;
+//    }
 
     public Question( UUID qid, String question, Date deadline){
         this.qid = qid;
