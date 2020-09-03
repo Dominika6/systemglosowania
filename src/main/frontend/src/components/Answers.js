@@ -91,6 +91,14 @@ export default class Answers extends Component{
         });
     };
 
+    whichAnswer(answer){
+        if(answer == "true"){
+            return "Yes"
+        }else{
+            return "No"
+        }
+    }
+
     render() {
         return(
             <>
@@ -126,12 +134,12 @@ export default class Answers extends Component{
                                         {matchingAnswer
                                             ?
                                             <div>
-                                                {(matchingAnswer.answer.toString())}
+                                                {this.whichAnswer(matchingAnswer.answer.toString())}
                                                 {/*{answ.toString()}*/}
                                             </div>
                                             :
                                             <div>
-                                                uy
+
                                                 <Form onSubmit={this.submitAnswer} id="answerFormId">
                                                     <Form.Group controlId="formGridEmail1" sm={10}>
                                                         <Col sm={10} className="ml-3">
