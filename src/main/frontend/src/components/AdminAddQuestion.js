@@ -19,8 +19,9 @@ export default class CastYourVote extends Component{
     }
 
     submitQuestion = event => {
-        event.preventDefault()
-        axios.post("http://localhost:8080/api/questions/addQuestion/" + this.state.question + "/" + this.state.deadline )
+        let questionToUrl = this.state.question.replace("?", "%3F")
+        event.preventDefault();
+        axios.post("http://localhost:8080/api/questions/addQuestion/" + questionToUrl + "/" + this.state.deadline )
             .then(response => {
                 this.setState(this.initialState);
                 alert(response.data);
